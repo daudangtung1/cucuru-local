@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Services;
 
-
-use App\Utils\CacheHelper;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class ModelRepository
+abstract class BaseService
 {
     protected $model;
-    protected $cache;
 
     public function __construct($id = null)
     {
         $this->model($id);
-        $this->cache = CacheHelper::getInstance();
     }
 
     public function model($id = null)

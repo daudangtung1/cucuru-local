@@ -9,6 +9,8 @@ class ApiController extends Controller
 {
     use ApiResponseTrait;
 
+    const DEFAULT_LIMIT = 10;
+
     public function __construct()
     {
         parent::__construct();
