@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->string('full_name')->nullable();
             $table->string('cover_url')->nullable();
             $table->string('avatar_url')->nullable();
@@ -27,8 +27,6 @@ return new class extends Migration
             $table->string('instagram_url')->nullable();
             $table->tinyInteger('gender')->nullable()->comment('0: female, 1: male');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

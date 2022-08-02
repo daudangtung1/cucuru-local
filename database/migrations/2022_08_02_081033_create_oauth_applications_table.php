@@ -15,13 +15,11 @@ return new class extends Migration
     {
         Schema::create('oauth_applications', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->string('client_id')->unique()->nullable();
             $table->string('client_secret')->nullable();
             $table->text('scopes')->nullable();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

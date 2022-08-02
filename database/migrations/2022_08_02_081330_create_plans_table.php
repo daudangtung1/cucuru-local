@@ -17,10 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->double('price')->default(0)->nullable();
-            $table->bigInteger('created_by')->nullable();
+            $table->foreignId('create_by')->references('id')->on('users');
             $table->timestamps();
 
-            $table->foreign('create_by')->references('id')->on('users');
         });
     }
 
