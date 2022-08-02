@@ -22,8 +22,7 @@ return new class extends Migration
             $table->dropColumn('phone_number');
             $table->dropColumn('account_type');
             $table->dropColumn('date_of_birth');
-
-            $table->string('user_name')->unique();
+            $table->unique('user_name');
         });
     }
 
