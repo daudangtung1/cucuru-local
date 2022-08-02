@@ -21,16 +21,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'avatar',
-        'gender',
-        'profile',
         'password',
         'user_name',
-        'full_name',
-        'is_active',
-        'account_type',
-        'phone_number',
-        'date_of_birth',
     ];
 
     /**
@@ -50,10 +42,17 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'date_of_birth' => 'datetime',
     ];
 
-    public function books() {
+    public function posts() {
         return $this->hasMany(Post::class, 'created_by');
+    }
+
+    public function profile() {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function plans() {
+        return $this->hasMany(Plan::class, 'created_by', 'id');
     }
 }
