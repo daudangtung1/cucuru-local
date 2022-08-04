@@ -1,0 +1,381 @@
+openapi: 3.0.3
+info:
+  title: 'Cucurucrew API docs'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/user:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/auth/login:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 4
+                    username: johndoe
+                    email: johndoe@example.com
+                  tokens:
+                    access_token: 2|qhbR1p8oGHwzjbpJmmYr0C2pDlFXiUHtt6x91qsb
+                properties:
+                  data:
+                    type: object
+                    example:
+                      id: 4
+                      username: johndoe
+                      email: johndoe@example.com
+                  tokens:
+                    type: object
+                    example:
+                      access_token: 2|qhbR1p8oGHwzjbpJmmYr0C2pDlFXiUHtt6x91qsb
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: julianne37@example.com
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: tqvbydn
+                device_name:
+                  type: string
+                  description: ''
+                  example: magni
+              required:
+                - email
+                - password
+                - device_name
+      security: []
+  /api/v1/posts:
+    get:
+      summary: 'Display a listing of the resource.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  _status: 200
+                  _success: true
+                  _messages: null
+                  _data:
+                    current_page: 1
+                    data: []
+                    first_page_url: 'http://localhost/api/v1/posts?page=1'
+                    from: null
+                    last_page: 1
+                    last_page_url: 'http://localhost/api/v1/posts?page=1'
+                    links:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://localhost/api/v1/posts?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    next_page_url: null
+                    path: 'http://localhost/api/v1/posts'
+                    per_page: 10
+                    prev_page_url: null
+                    to: null
+                    total: 0
+                  _extra:
+                    _block: null
+                    _pagination:
+                      _current: 1
+                      _next: null
+                      _prev: null
+                      _last: 1
+                      _limit: 10
+                      _total: 0
+                properties:
+                  _status:
+                    type: integer
+                    example: 200
+                  _success:
+                    type: boolean
+                    example: true
+                  _messages:
+                    type: string
+                    example: null
+                  _data:
+                    type: object
+                    example:
+                      current_page: 1
+                      data: []
+                      first_page_url: 'http://localhost/api/v1/posts?page=1'
+                      from: null
+                      last_page: 1
+                      last_page_url: 'http://localhost/api/v1/posts?page=1'
+                      links:
+                        -
+                          url: null
+                          label: '&laquo; Previous'
+                          active: false
+                        -
+                          url: 'http://localhost/api/v1/posts?page=1'
+                          label: '1'
+                          active: true
+                        -
+                          url: null
+                          label: 'Next &raquo;'
+                          active: false
+                      next_page_url: null
+                      path: 'http://localhost/api/v1/posts'
+                      per_page: 10
+                      prev_page_url: null
+                      to: null
+                      total: 0
+                  _extra:
+                    type: object
+                    example:
+                      _block: null
+                      _pagination:
+                        _current: 1
+                        _next: null
+                        _prev: null
+                        _last: 1
+                        _limit: 10
+                        _total: 0
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/posts/{id}':
+    get:
+      summary: 'Display the specified resource.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  _status: 404
+                  _success: false
+                  _messages:
+                    - 'Post not found'
+                  _data: null
+                  _extra:
+                    _block: null
+                    _pagination:
+                      _current: 1
+                      _next: null
+                      _prev: null
+                      _last: 1
+                      _limit: 10
+                      _total: 0
+                properties:
+                  _status:
+                    type: integer
+                    example: 404
+                  _success:
+                    type: boolean
+                    example: false
+                  _messages:
+                    type: array
+                    example:
+                      - 'Post not found'
+                    items:
+                      type: string
+                  _data:
+                    type: string
+                    example: null
+                  _extra:
+                    type: object
+                    example:
+                      _block: null
+                      _pagination:
+                        _current: 1
+                        _next: null
+                        _prev: null
+                        _last: 1
+                        _limit: 10
+                        _total: 0
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update the specified resource in storage.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the post.'
+        example: 5
+        required: true
+        schema:
+          type: integer
+tags:
+  -
+    name: Endpoints
+    description: ''

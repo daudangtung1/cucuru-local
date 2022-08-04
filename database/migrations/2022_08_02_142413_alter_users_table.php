@@ -22,7 +22,6 @@ return new class extends Migration
             $table->dropColumn('phone_number');
             $table->dropColumn('account_type');
             $table->dropColumn('date_of_birth');
-            $table->unique('user_name');
         });
     }
 
@@ -42,8 +41,6 @@ return new class extends Migration
             $table->tinyInteger('gender')->nullable()->comment('0: female, 1: male');
             $table->tinyInteger('is_active')->default(1)->comment('0: inactive, 1: active');
             $table->tinyInteger('account_type')->default(1)->comment('1-Member. 2-Admin');
-
-            $table->dropUnique('user_name');
         });
     }
 };
