@@ -16,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('signup', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'signup']);
+Route::post('email/verify', [\App\Http\Controllers\Auth\VerifyEmailController::class, 'verify']);
+Route::post('signin', [\App\Http\Controllers\Auth\AuthenticatedController::class, 'signin']);
+Route::post('refresh', [\App\Http\Controllers\Auth\AuthenticatedController::class, 'refreshToken']);
+Route::middleware(['aws-cognito'])->get('/user', function (Request $request) {
+    return auth();
 });
 
 Route::post('/v1/auth/login', LoginController::class);
@@ -25,6 +29,7 @@ Route::post('/v1/auth/login', LoginController::class);
 Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api\V1',
+    'middleware' => ['aws-cognito'],
 ], function () {
     Route::get('posts', 'PostController@index');
     Route::post('posts', 'PostController@store');
