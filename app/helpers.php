@@ -557,3 +557,54 @@ if (!function_exists('content_beautify')) {
         return $content;
     }
 }
+if (!function_exists('convert_associative_array_to_flatten_array')) {
+    function convert_associative_array_to_flatten_array($array, $originKey, &$key = '', $level = 0)
+    {
+        if (!is_array($array)) {
+            return FALSE;
+        }
+
+        if ($key == '') {
+            $key = $originKey;
+        }
+        $result = array();
+
+        foreach ($array as $keyItem => $value) {
+            if (array_key_first($array) == $keyItem) {
+                $level++;
+            };
+
+            if ($level == 1) {
+                $key = $originKey . ($originKey ? '.' : '') . $keyItem;
+            } else {
+                $key .= '.' . $keyItem;
+            }
+
+            if (is_array($value)) {
+                $result = array_merge($result, convert_associative_array_to_flatten_array($value, $originKey, $key, $level));
+            } else {
+                $result[$key] = $value;
+                if ($level == 1) {
+                    $key = $originKey;
+                } else {
+                    if (array_key_last($array) === $keyItem) {
+                        $level--;
+                        $key = explode('.', $key);
+
+                        if ($level == 1) {
+                            $key = array_slice($key, 0, $level);
+                        } else {
+                            $key = array_slice($key, 0, $level + 1);
+                        }
+
+                        $key = implode('.', $key);
+                    } else {
+                        $key = str_replace('.' . $keyItem, '', $key);
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+}
