@@ -30,4 +30,6 @@ Route::group([
     Route::get('posts/{id}', 'PostController@show');
     Route::put('posts/{id}', 'PostController@update');
     Route::delete('posts/{id}', 'PostController@destroy');
+
+    Route::get('prerequisites', 'PrerequisiteController@getPageInfo');
 });
