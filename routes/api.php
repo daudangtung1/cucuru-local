@@ -44,4 +44,5 @@ Route::group([
     Route::post('/faqs', [FaqController::class, 'create']);
 
     Route::post('comment', 'CommentController@store');
+    Route::get('payments', 'PaymentController@index');
 });
