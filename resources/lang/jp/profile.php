@@ -2,7 +2,7 @@
 return [
     // 11.0 -> 11.4
     'page_title' => 'プロフィール',
-    
+
     'post' => 'Post',
     'photo' => 'Photo',
     'movie' => 'Movie',
