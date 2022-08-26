@@ -5,10 +5,25 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends ApiController
 {
+    /**
+     * @var UserService
+     */
+    protected $userService;
+
+    /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userService = new UserService();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -63,5 +78,35 @@ class UserController extends ApiController
     public function destroy($id)
     {
         //
+    }
+
+    public function getFollower(Request $request)
+    {
+        $pageNo = $this->getValidPageNo($request->input('page'));
+        $limit = $this->getValidLimit($request->input('limit'), self::DEFAULT_LIMIT);
+        $followers = $this->userService->getListFollower($limit, $pageNo);
+
+        if (isset($followers['errors'])) {
+            return $this->responseFail($followers['errors']);
+        }
+
+        $this->customPagination($followers['pagination']);
+
+        return $this->responseSuccess($followers['data']);
+    }
+
+    public function getFollow(Request $request)
+    {
+        $pageNo = $this->getValidPageNo($request->input('page'));
+        $limit = $this->getValidLimit($request->input('limit'), self::DEFAULT_LIMIT);
+        $follows = $this->userService->getListFollow($limit, $pageNo);
+
+        if (isset($follows['errors'])) {
+            return $this->responseFail($follows['errors']);
+        }
+
+        $this->customPagination($follows['pagination']);
+
+        return $this->responseSuccess($follows['data']);
     }
 }

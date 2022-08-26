@@ -24,8 +24,6 @@ Route::post('refresh', [\App\Http\Controllers\Auth\AuthenticatedController::clas
 Route::post('logout', [\App\Http\Controllers\Auth\AuthenticatedController::class, 'logout'])->middleware('aws-cognito');
 
 Route::post('/v1/auth/login', LoginController::class);
-Route::get('prerequisites', 'PrerequisiteController@getPageInfo');
-
 Route::get('/v1/prerequisites', [PrerequisiteController::class, 'getPageInfo']);
 
 Route::group([
@@ -46,4 +44,7 @@ Route::group([
     Route::post('comment', 'CommentController@store');
     Route::get('payments', 'PaymentController@index');
     Route::post('profile', 'ProfileController@update');
+
+    Route::get('users/follows', 'UserController@getFollow');
+    Route::get('users/followers', 'UserController@getFollower');
 });
