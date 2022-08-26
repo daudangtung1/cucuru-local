@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\CustomException;
 use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class CommentService extends BaseService
 {
@@ -28,8 +29,7 @@ class CommentService extends BaseService
     public function create($commentData)
     {
         try {
-            // TODO:Vì chưa có auth nên tạm thời để random id
-            $commentData['created_by'] = rand(1, 5);
+            $commentData['created_by'] = Auth::guard('api')->id();
 
             if ($commentData['commentable_type'] == Comment::COMMENT_TYPE['POST']) {
                 $commentData['commentable_type'] = Post::class;

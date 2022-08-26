@@ -15,15 +15,18 @@ class Plan extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'client_id',
-        'client_secret',
-        'scopes',
+        'name',
+        'created_by',
+        'monthly_fee',
+        'description',
+        'genre_id',
+        'viewing_restriction',
+        'set_back_number_sale',
     ];
 
     protected $dates = ['created_at', 'updated_at'];
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

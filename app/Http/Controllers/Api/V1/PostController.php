@@ -7,6 +7,8 @@ use App\Utils\AppConfig;
 use Illuminate\Http\Request;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends ApiController
 {
@@ -105,7 +107,9 @@ class PostController extends ApiController
                     AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND);
             }
 
-            // TODO: Chỗ này mai sau thêm quyền check xem có quyền cập nhật không
+            if (Gate::forUser(Auth::guard('api')->user())->denies('is-owner', $post)) {
+                return $this->responseFail(trans('post.message.can_not_update'), '', AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHORIZED);
+            }
 
             if (!$this->customValidate($request, [
                 'content' => 'string|sometimes',
@@ -146,7 +150,10 @@ class PostController extends ApiController
                 return $this->responseFail(trans('post.message.post_not_found'), $post,
                     AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND);
             }
-            // TODO: chỗ này mai sau check quyền xóa
+            if (Gate::forUser(Auth::guard('api')->user())->denies('is-owner', $post)) {
+                return $this->responseFail(trans('post.message.can_not_delete'), '', AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHORIZED);
+            }
+
             $this->transactionStart();
             $this->postService->destroy($post);
 
