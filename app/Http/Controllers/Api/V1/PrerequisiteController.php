@@ -17,12 +17,17 @@ class PrerequisiteController extends ApiController
             return $this->responseFail($this->getValidationErrors());
         }
 
-        $filePath = resource_path('lang/' . $request->lang . '/' . $request->page . '.php');
+        $arrayPage = explode(',', $request->page);
+        foreach ($arrayPage as $page) {
+            $filePath = resource_path('lang/' . $request->lang . '/' . $page . '.php');
 
-        if (!File::isFile($filePath)) {
-            return $this->responseFail(__('prerequisite.file_not_exist'));
+            if (!File::isFile($filePath)) {
+                $fileData[$page] = __('prerequisite.file_not_exist');
+            } else {
+                $fileData[$page] = include($filePath);
+            }
         }
 
-        return $this->responseSuccess(include($filePath));
+        return $this->responseSuccess($fileData);
     }
 }
