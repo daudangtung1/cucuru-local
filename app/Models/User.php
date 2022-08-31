@@ -24,7 +24,6 @@ class User extends Authenticatable
         'email',
         'password',
         'username',
-        'full_name'
     ];
 
     /**
@@ -69,5 +68,9 @@ class User extends Authenticatable
     public function followers()
     {
         return$this->hasManyThrough(self::class, Follow::class, 'follow_user_id', 'id', 'id', 'user_id');
+    }
+
+    public function notificationSetting() {
+        return $this->hasOne(NotificationSetting::class);
     }
 }

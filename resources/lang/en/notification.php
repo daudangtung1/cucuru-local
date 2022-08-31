@@ -26,4 +26,8 @@ return [
     'following_creator' => '(Following creator)',
     'subscribing_creator' => '(Subscribing creator)',
     'notified_irregularly' => '(Notified irregularly)',
+
+    'message' => [
+        'no_notification' => 'No notification',
+    ],
 ];
