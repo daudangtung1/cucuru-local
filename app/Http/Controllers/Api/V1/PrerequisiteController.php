@@ -18,16 +18,19 @@ class PrerequisiteController extends ApiController
         }
 
         $arrayPage = explode(',', $request->page);
+        $languages = [];
         foreach ($arrayPage as $page) {
             $filePath = resource_path('lang/' . $request->lang . '/' . $page . '.php');
 
             if (!File::isFile($filePath)) {
-                $fileData[$page] = __('prerequisite.file_not_exist');
+                $languages[$page] = __('prerequisite.file_not_exist');
             } else {
-                $fileData[$page] = include($filePath);
+                $languages[$page] = include($filePath);
             }
         }
 
-        return $this->responseSuccess($fileData);
+        return $this->responseSuccess([
+                'languages' => $languages
+        ]);
     }
 }
