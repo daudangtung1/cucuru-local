@@ -1,0 +1,20 @@
+<?php
+return [
+    'profile' => 'プロフィール',
+    'notice' => '通知',
+    'favorite' => 'お気に入り',
+    'home' => 'ホーム',
+    'search' => '検索',
+    'DM' => 'DM',
+    'setting' => '設定',
+    'affiliate' => 'アフィリエイト',
+    'sales' => '売上管理',
+    'plan' => '管理中のプラン',
+    'list' => '予約投稿一覧',
+    'payment' => '支払い情報',
+    'purchase' => '購入履歴',
+    'help' => 'ヘルプ',
+    'language' => 'language',
+    'invite' => 'お友達招待',
+    'logout' => 'ログアウト',
+];

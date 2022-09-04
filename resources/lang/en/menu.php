@@ -1,0 +1,20 @@
+<?php
+return [
+    'profile' => 'Profile',
+    'notice' => 'Notice',
+    'favorite' => 'Favorite',
+    'home' => 'Home',
+    'search' => 'Search',
+    'DM' => 'DM',
+    'setting' => 'Setting',
+    'affiliate' => 'Affiliate',
+    'sales' => 'Sales management',
+    'plan' => 'Plan under management',
+    'list' => 'List of reserved posts',
+    'payment' => 'Payment information',
+    'purchase' => 'Purchase history',
+    'help' => 'Help',
+    'language' => 'Language',
+    'invite' => 'Invite friends',
+    'logout' => 'Logout',
+];
