@@ -1,6 +1,8 @@
 <?php
 return [
     // 11.0 -> 11.4
+    'page_title' => 'Profile',
+    
     'post' => 'Post',
     'photo' => 'Photo',
     'movie' => 'Movie',
@@ -15,12 +17,6 @@ return [
     'free_plan' => ":name's free plan",
 
     'user_participate' => 'Participate for ¥:price/month',
-
-    // 12.0
-    'following_jp' => 'Following',
-    'follower_jp' => 'Follower',
-    'follow_jp' => 'Follow',
-    'my_name' => 'My name',
 
     // 15.0
     'cam_screen' => 'Camera screen',

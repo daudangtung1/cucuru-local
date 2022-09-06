@@ -1,6 +1,8 @@
 <?php
 return [
     // 18.0
+    'page_title' => 'Search',
+
     'search' => 'Search',
     'search_word' => 'Search word',
 
@@ -32,6 +34,11 @@ return [
     'support' => 'Support',
 
     // 18.1
+    'page_title_1' => 'Post search results',
+
     'post' => 'Post',
     'creator' => 'Creator',
+
+    // 18.2
+    'page_title_2' => 'Search results Creator',
 ];

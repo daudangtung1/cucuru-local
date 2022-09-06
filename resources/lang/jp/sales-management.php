@@ -1,6 +1,7 @@
 <?php
 return [
     // 24.0
+    'page_title' => '売上管理',
     'sales_management' => '売上管理',
     'bank_account' => '銀行口座登録',
     'monthly' => '月別登録',

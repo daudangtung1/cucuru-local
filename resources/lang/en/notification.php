@@ -1,5 +1,7 @@
 <?php
 return [
+    'page_title' => 'Notification',
+
     // 13.0
     'all' => 'All',
     'important' => 'Important',

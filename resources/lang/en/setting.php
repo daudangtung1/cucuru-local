@@ -1,6 +1,8 @@
 <?php
 return [
     // 22.0
+    'page_title' => 'Setting',
+    
     'setting' => 'Setting',
     'profile' => 'Profile',
     'plan' => 'Plan under management',

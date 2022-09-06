@@ -1,6 +1,8 @@
 <?php
 return [
     // 20.0
+    'page_title' => 'My profile settings',
+
     'username' => 'Username',
     'profile' => 'Profile',
     'dob' => 'Date of birth',

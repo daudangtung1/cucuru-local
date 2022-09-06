@@ -1,6 +1,10 @@
 <?php
 return [
     // 21.0
+    'page_title' => 'Post',
+    'page_title_1' => 'Reservation settings',
+    'page_title_2' => 'Limited release setting',
+
     'post' => 'Post',
     'reservation_settings' => 'Reservation settings',
     'release_setting' => 'Limited release setting',

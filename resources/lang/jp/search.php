@@ -1,6 +1,8 @@
 <?php
 return [
     // 18.0
+    'page_title' => '検索',
+
     'search' => '検索',
     'search_word' => '検索ワード',
 
@@ -32,6 +34,11 @@ return [
     'support' => '支援',
 
     // 18.1
+    'page_title_1' => '検索結果　投稿',
+
     'post' => '投稿',
     'creator' => 'クリエーター',
+    
+    // 18.2
+    'page_title_2' => '検索結果　クリエーター',
 ];

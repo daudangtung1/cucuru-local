@@ -1,6 +1,10 @@
 <?php
 return [
     // 25.0
+    'page_title' => 'Plan under management',
+    'page_title_1' => 'Plan registration',
+    'page_title_2' => 'Promotion settings',
+    
     'plan_management' => 'Plan under management',
     'promotion_settings' => 'Promotion settings',
     'plan_registration' => 'Plan registration',

@@ -1,5 +1,8 @@
 <?php
 return [
+    //1.0
+    'page_title' => 'Top page',
+
     'fan_club' => 'Fan Club',
     'support' => 'Support',
     'pushing' => 'Pushing',

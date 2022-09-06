@@ -1,5 +1,7 @@
 <?php
 return [
+    'page_title' => 'Account',
+
     // 26.2
     'account' => 'Account',
     'user_id' => 'User ID',

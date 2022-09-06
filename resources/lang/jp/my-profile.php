@@ -1,6 +1,8 @@
 <?php
 return [
     // 20.0
+    'page_title' => '自分のプロフィール 設定',
+
     'username' => 'ユーザー名',
     'profile' => 'プロフィール',
     'dob' => '生年月日',

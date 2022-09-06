@@ -1,5 +1,7 @@
 <?php
 return [
+    'page_title' => '通知',
+
     // 13.0
     'all' => 'すべて',
     'important' => '重要',

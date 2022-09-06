@@ -1,6 +1,7 @@
 <?php
 return [
     // 23.0
+    'page_title' => 'Affiliate application form',
     'title' => 'Affiliate application form',
 
     'email_register' => 'Email address register',

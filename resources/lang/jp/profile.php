@@ -1,6 +1,8 @@
 <?php
 return [
     // 11.0 -> 11.4
+    'page_title' => 'プロフィール',
+    
     'post' => 'Post',
     'photo' => 'Photo',
     'movie' => 'Movie',
@@ -15,12 +17,6 @@ return [
     'free_plan' => ":nameの奮発無料プラン",
 
     'user_participate' => '￥:price/月で参加する',
-
-    // 12.0
-    'following_jp' => 'フォロー中',
-    'follower_jp' => 'フォロワー',
-    'follow_jp' => 'フォロー',
-    'my_name' => '自分の名前',
 
     // 15.0
     'cam_screen' => 'カメラ画面',

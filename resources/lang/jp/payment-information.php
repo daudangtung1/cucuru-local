@@ -1,6 +1,8 @@
 <?php
 return [
     // 27.0
+    'page_title' => '支払い情報',
+
     'payment_information' => '支払い情報',
 
     'card' => 'カード',

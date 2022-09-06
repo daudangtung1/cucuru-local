@@ -1,6 +1,8 @@
 <?php
 return [
     // 22.0
+    'page_title' => '設定',
+    
     'setting' => '設定',
     'profile' => 'プロフィール',
     'plan' => '管理中のプラン',

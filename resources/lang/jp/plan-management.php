@@ -1,6 +1,10 @@
 <?php
 return [
     // 25.0
+    'page_title' => '管理中のプラン',
+    'page_title_1' => 'プラン登録',
+    'page_title_2' => 'プロモーション設定',
+
     'plan_management' => '管理中のプラン',
     'promotion_settings' => 'プロモーション設定',
     'plan_registration' => 'プラン登録',

@@ -1,6 +1,7 @@
 <?php
 return [
     // 24.0
+    'page_title' => 'Sales management',
     'sales_management' => 'Sales management',
     'bank_account' => 'Bank account',
     'monthly' => 'Monthly',

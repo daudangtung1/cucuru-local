@@ -1,5 +1,8 @@
 <?php
 return [
+    //1.0
+    'page_title' => 'トップページ',
+
     'fan_club' => 'ファンクラブ',
     'support' => '支援',
     'pushing' => '推し活',

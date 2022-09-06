@@ -1,6 +1,8 @@
 <?php
 return [
     // 27.0
+    'page_title' => 'Payment information',
+
     'payment_information' => 'Payment information',
 
     'card' => 'Card',

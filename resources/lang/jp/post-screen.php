@@ -1,6 +1,10 @@
 <?php
 return [
     // 21.0
+    'page_title' => '投稿',
+    'page_title_1' => '予約設定',
+    'page_title_2' => '期間限定公開設定',
+
     'post' => '投稿',
     'reservation_settings' => '予約設定',
     'release_setting' => '期間限定公開設定',

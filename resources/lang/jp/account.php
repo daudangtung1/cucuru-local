@@ -1,7 +1,9 @@
 <?php
 return [
+    'page_title' => 'アカウント',
+
     // 26.2
-    'account' => 'アカウント    ',
+    'account' => 'アカウント',
     'user_id' => 'ユーザーID',
     'email' => 'メールアドレス',
     'password' => 'パスワード',
