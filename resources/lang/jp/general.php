@@ -9,7 +9,7 @@ return [
     'ASMR' => 'ASMR',
     'live_action' => '実写',
     'VTuber' => 'VTuber',
-    
+
     'follow_us' => 'フォローする',
     'connect' => 'つながる',
     'mitsugu' => 'みつぐ',
@@ -47,4 +47,7 @@ return [
 
     //link
     'here' => 'こちら',
+
+    // error message
+    'not_found' => '404 not found'
 ];

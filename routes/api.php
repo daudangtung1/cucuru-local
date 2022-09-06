@@ -32,4 +32,7 @@ Route::group([
     Route::delete('posts/{id}', 'PostController@destroy');
 
     Route::get('prerequisites', 'PrerequisiteController@getPageInfo');
+
+    Route::get('/faqs', 'FaqController@index');
+    Route::get('/faqs/{id}', 'FaqController@show');
 });
