@@ -49,5 +49,5 @@ return [
     'here' => 'こちら',
 
     // error message
-    'not_found' => '404 not found'
+    'not_found' => '404 見つかりません'
 ];
