@@ -18,11 +18,8 @@ class UserSeeder extends Seeder
     {
         for ($i = 0; $i < 10; $i++) {
             User::create([
-                'account_type' => 0,
-                'is_active' => rand(0, 1),
                 'email' => "test{$i}@admin.com",
-                'user_name' => "user_name_{$i}",
-                'full_name' => "full_name_{$i}",
+                'username' => "user_name_{$i}",
                 'password' => Hash::make('123456'),
                 'email_verified_at' => \Carbon\Carbon::now()
             ]);

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('avatar')->default('');
-            $table->tinyInteger('account_type')->default('1')->comment('1-Member. 2-Admin');
+            $table->tinyInteger('account_type')->default(1)->comment('1-Member. 2-Admin');
             $table->dateTime('date_of_birth')->nullable();
             $table->string('phone_number')->unique()->nullable();
             $table->tinyInteger('is_active')->default(1)->comment('0: inactive, 1: active');

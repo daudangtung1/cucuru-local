@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Auth\LoginController;
+use App\Http\Controllers\Api\FaqController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,9 @@ Route::group([
 
     Route::get('prerequisites', 'PrerequisiteController@getPageInfo');
 
-    Route::get('/faqs', 'FaqController@index');
-    Route::get('/faqs/{id}', 'FaqController@show');
+    Route::get('/faqs', [FaqController::class, 'list']);
+
+    Route::get('/faqs/{id}', [FaqController::class, 'show']);
+
+    Route::post('/faqs', [FaqController::class, 'create']);
 });
