@@ -160,4 +160,10 @@ return [
 
     'attributes' => [],
 
+    'cognito' => [
+        'invalid_user' => 'Invalid user',
+        'invalid_token' => 'Invalid token',
+        'exceeded' => 'Exceeded',
+        'confirmed' => 'Confirmed',
+    ],
 ];
