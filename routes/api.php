@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\FaqController;
+use App\Http\Controllers\Api\V1\PrerequisiteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::middleware(['aws-cognito'])->get('/user', function (Request $request) {
 
 Route::post('/v1/auth/login', LoginController::class);
 Route::get('prerequisites', 'PrerequisiteController@getPageInfo');
+
+Route::get('/v1/prerequisites', [PrerequisiteController::class, 'getPageInfo']);
 
 Route::group([
     'prefix' => 'v1',
