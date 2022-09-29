@@ -25,6 +25,7 @@ Route::middleware(['aws-cognito'])->get('/user', function (Request $request) {
 });
 
 Route::post('/v1/auth/login', LoginController::class);
+Route::get('prerequisites', 'PrerequisiteController@getPageInfo');
 
 Route::group([
     'prefix' => 'v1',
@@ -36,8 +37,6 @@ Route::group([
     Route::get('posts/{id}', 'PostController@show');
     Route::put('posts/{id}', 'PostController@update');
     Route::delete('posts/{id}', 'PostController@destroy');
-
-    Route::get('prerequisites', 'PrerequisiteController@getPageInfo');
 
     Route::get('/faqs', [FaqController::class, 'list']);
 
