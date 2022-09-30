@@ -307,4 +307,24 @@ class CognitoTokenGuard extends TokenGuard
 
         return $response;
     }
+
+    public function globalSignOut($token) {
+        try {
+            $response = $this->client->globalSignOut($token);
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $response;
+    }
+
+    public function getUserByAccessToken($token) {
+        try {
+            $response = $this->client->getUserByAccessToken($token);
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        return $response;
+    }
 }

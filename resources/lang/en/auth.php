@@ -25,6 +25,9 @@ return [
         'invalid_token_exception' => 'Invalid token exception.',
         'signup_success' => 'Register success.',
         'user_not_confirmed_exception' => 'User not confirmed exception.',
+        'logout_fail' => 'Logout fail.',
+        'logout_success' => 'Logout success.',
+        'token_has_revoked' => 'Access Token has been revoked',
     ]
 
 ];

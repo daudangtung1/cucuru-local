@@ -608,6 +608,18 @@ class CognitoClient
         } //Try-catch ends
     } //Function ends
 
+    public function globalSignOut(string $token)
+    {
+        try {
+            $result = $this->client->globalSignOut([
+                'AccessToken' => $token
+            ]);
+        } catch (CognitoIdentityProviderException $e) {
+            throw $e;
+        } //Try-catch ends
+
+        return $result;
+    } //Function ends
 
     public function resendToken($username)
     {

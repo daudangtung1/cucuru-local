@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\ApiController;
-use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Ellaisys\Cognito\Auth\AuthenticatesUsers as CognitoAuthenticatesUsers;
 use Ellaisys\Cognito\AwsCognitoClaim;
@@ -12,9 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AuthenticatedController extends ApiController
 {
@@ -113,5 +110,19 @@ class AuthenticatedController extends ApiController
         }
 
         return $this->responseSuccess($claim['AuthenticationResult']);
+    }
+
+    public function logout() {
+        try {
+            $claim = Auth::guard('api')->globalSignOut(request()->bearerToken());
+
+            if (!isset($claim['@metadata']) || !isset($claim['@metadata']['statusCode']) || $claim['@metadata']['statusCode'] != 200) {
+                return $this->responseFail(__('auth.cognito.logout_fail'));
+            }
+        } catch (Exception $e) {
+            return $this->responseFail(__('auth.cognito.logout_fail'));
+        }
+
+        return $this->responseSuccess(__('auth.cognito.logout_success'));
     }
 }
