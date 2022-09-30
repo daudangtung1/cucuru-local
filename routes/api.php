@@ -21,9 +21,7 @@ Route::post('signup', [\App\Http\Controllers\Auth\RegisteredUserController::clas
 Route::post('email/verify', [\App\Http\Controllers\Auth\VerifyEmailController::class, 'verify']);
 Route::post('signin', [\App\Http\Controllers\Auth\AuthenticatedController::class, 'signin']);
 Route::post('refresh', [\App\Http\Controllers\Auth\AuthenticatedController::class, 'refreshToken']);
-Route::middleware(['aws-cognito'])->get('/user', function (Request $request) {
-    return auth();
-});
+Route::post('logout', [\App\Http\Controllers\Auth\AuthenticatedController::class, 'logout'])->middleware('aws-cognito');
 
 Route::post('/v1/auth/login', LoginController::class);
 Route::get('prerequisites', 'PrerequisiteController@getPageInfo');

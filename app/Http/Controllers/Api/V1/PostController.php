@@ -112,9 +112,9 @@ class PostController extends ApiController
             // TODO: Chỗ này mai sau thêm quyền check xem có quyền cập nhật không
 
             if (!$this->customValidate($request, [
-                'content' => 'string|nullable',
-                'title' => 'string|nullable|max:255',
-                'status' => 'numeric|in:1,2|nullable',
+                'content' => 'string|sometimes',
+                'title' => 'string|sometimes|max:255',
+                'status' => 'numeric|in:1,2|sometimes',
             ])) {
                 return $this->responseFail($this->getValidationErrors());
             }

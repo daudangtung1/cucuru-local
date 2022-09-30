@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\CustomException;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostService extends BaseService
 {
@@ -71,8 +72,7 @@ class PostService extends BaseService
     public function create($postData)
     {
         try {
-            // TODO:Vì chưa có auth nên tạm thời để random id
-            $postData['user_id'] = rand(1, 5);
+            $postData['created_by'] = Auth::guard('api')->id();
             $post = Post::create($postData);
 
             return $post;

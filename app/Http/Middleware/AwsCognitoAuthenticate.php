@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Closure;
 use Ellaisys\Cognito\Exceptions\InvalidTokenException;
 use Ellaisys\Cognito\Exceptions\NoTokenException;
@@ -9,6 +10,7 @@ use Ellaisys\Cognito\Http\Middleware\BaseMiddleware;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AwsCognitoAuthenticate extends BaseMiddleware
 {
@@ -41,7 +43,7 @@ class AwsCognitoAuthenticate extends BaseMiddleware
 
             //Authenticate the request
             $this->authenticate($request, $guard);
-
+            Auth::guard('api')->getUserByAccessToken(request()->bearerToken());
             return $next($request);
         } catch (Exception $e) {
             if ($e instanceof NoTokenException) {
@@ -58,6 +60,15 @@ class AwsCognitoAuthenticate extends BaseMiddleware
                     '_status' => Response::HTTP_UNAUTHORIZED,
                     '_success' => false,
                     '_messages' => __('auth.cognito.invalid_token_exception'),
+                    '_data' => null
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            if ($e instanceof CognitoIdentityProviderException) {
+                return response()->json([
+                    '_status' => Response::HTTP_UNAUTHORIZED,
+                    '_success' => false,
+                    '_messages' => __('auth.cognito.token_has_revoked'),
                     '_data' => null
                 ], Response::HTTP_UNAUTHORIZED);
             }
