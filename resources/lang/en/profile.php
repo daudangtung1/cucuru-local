@@ -2,7 +2,7 @@
 return [
     // 11.0 -> 11.4
     'page_title' => 'Profile',
-    
+
     'post' => 'Post',
     'photo' => 'Photo',
     'movie' => 'Movie',
@@ -26,4 +26,8 @@ return [
 
     'live' => 'Live',
     'radio' => 'Radio',
+    'message' => [
+        'update_profile_success' => 'Update profile success!',
+        'profile_not_exists' => 'Profile of user dosen\'t exists!',
+    ]
 ];

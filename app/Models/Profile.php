@@ -9,6 +9,10 @@ class Profile extends Model
 {
     use HasFactory;
 
+    const GENDER = [
+        'MALE' => 1,
+        'FEMALE' => 0,
+    ];
     /**
      * The attributes that are mass assignable.
      *
@@ -26,6 +30,10 @@ class Profile extends Model
         'tiktok_url',
         'youtube_url',
         'amazon_url',
+        'profile_info',
+        'allow_set_post_sensitive_content',
+        'allow_view_post_sensitive_content',
+        'birth_day',
     ];
 
     protected $dates = ['created_at', 'updated_at'];

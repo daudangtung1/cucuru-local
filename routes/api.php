@@ -45,4 +45,5 @@ Route::group([
 
     Route::post('comment', 'CommentController@store');
     Route::get('payments', 'PaymentController@index');
+    Route::post('profile', 'ProfileController@update');
 });
