@@ -60,4 +60,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Plan::class, 'created_by', 'id');
     }
+
+    public function follows()
+    {
+        return$this->hasManyThrough(self::class, Follow::class, 'user_id', 'id', 'id', 'follow_user_id');
+    }
+
+    public function followers()
+    {
+        return$this->hasManyThrough(self::class, Follow::class, 'follow_user_id', 'id', 'id', 'user_id');
+    }
 }
