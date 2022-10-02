@@ -2,7 +2,7 @@
 return [
     // 22.0
     'page_title' => 'Setting',
-    
+
     'setting' => 'Setting',
     'profile' => 'Profile',
     'plan' => 'Plan under management',
@@ -14,4 +14,8 @@ return [
     'block' => 'Block list',
     'terms' => 'Terms of service',
     'privacy_policy' => 'Privacy policy',
+    'message' => [
+        'no_data_update' => 'No data to update',
+        'not_found' => 'Not found setting',
+    ]
 ];

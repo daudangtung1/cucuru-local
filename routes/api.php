@@ -50,4 +50,7 @@ Route::group([
 
     Route::post('plans', 'PlanController@store');
     Route::put('plans/{id}', 'PlanController@update');
+
+    Route::get('notifications', 'NotificationController@index');
+    Route::post('notification-setting/change', 'NotificationSettingController@update');
 });
