@@ -28,6 +28,9 @@ return [
         'logout_fail' => 'Logout fail.',
         'logout_success' => 'Logout success.',
         'token_has_revoked' => 'Access Token has been revoked',
-    ]
-
+    ],
+    'token_expired' => 'Your session has timed out, please login again', // token_expired
+    'token_invalid' => 'You have been logged out, please login again', // Token has invalid
+    'token_blacklisted' => 'Token has blacklisted, please login again',
+    'token_not_provided' => 'Token not provided',
 ];

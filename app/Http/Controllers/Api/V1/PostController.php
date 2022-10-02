@@ -55,23 +55,19 @@ class PostController extends ApiController
      */
     public function store(Request $request)
     {
-        try {
-            if (!$this->customValidate($request, [
-                'title' => 'required|max:255',
-                'content' => 'required',
-                'status' => 'required|numeric|in:1,2',
-            ])) {
-                return $this->responseFail($this->getValidationErrors());
-            }
-
-            $postData = $request->only('title', 'content', 'status');
-            $this->transactionStart();
-            $post = $this->postService->create($postData);
-
-            return $this->responseSuccess($post, trans('post.message.create_success'));
-        } catch (CustomException $exception) {
-            return $this->responseFail($exception);
+        if (!$this->customValidate($request, [
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'status' => 'required|numeric|in:1,2',
+        ])) {
+            return $this->responseFail($this->getValidationErrors());
         }
+
+        $postData = $request->only('title', 'content', 'status');
+        $this->transactionStart();
+        $post = $this->postService->create($postData);
+
+        return $this->responseSuccess($post, trans('post.message.create_success'));
     }
 
     /**
