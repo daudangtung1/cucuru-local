@@ -43,8 +43,11 @@ Route::group([
 
     Route::post('comment', 'CommentController@store');
     Route::get('payments', 'PaymentController@index');
-    Route::post('profile', 'ProfileController@update');
 
-    Route::get('users/follows', 'UserController@getFollow');
-    Route::get('users/followers', 'UserController@getFollower');
+    Route::post('user/profile', 'ProfileController@update');
+    Route::get('user/follows', 'UserController@getFollow');
+    Route::get('user/followers', 'UserController@getFollower');
+
+    Route::post('plans', 'PlanController@store');
+    Route::put('plans/{id}', 'PlanController@update');
 });
