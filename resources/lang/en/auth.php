@@ -28,6 +28,7 @@ return [
         'logout_fail' => 'Logout fail.',
         'logout_success' => 'Logout success.',
         'token_has_revoked' => 'Access Token has been revoked',
+        'not_authorized_exception' => 'These credentials do not match in Cognito.',
     ],
     'token_expired' => 'Your session has timed out, please login again', // token_expired
     'token_invalid' => 'You have been logged out, please login again', // Token has invalid

@@ -58,11 +58,11 @@ class AuthenticatedController extends ApiController
                 $response = $this->createLocalUser($credentials, $keyPassword);
 
                 if ($response) {
-                    return $this->responseFail(__('auth.cognito.login_sso_fail'));
+                    return __('auth.cognito.login_sso_fail');
                 }
             }
 
-            return $this->sendFailedLoginResponse($request, $e, $isJsonResponse, $paramUsername);
+            return __('auth.failed');
         } catch (CognitoIdentityProviderException $e) {
             return $this->sendFailedCognitoResponse($e, $isJsonResponse, $paramUsername);
         } catch (Exception $e) {
