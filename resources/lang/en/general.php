@@ -27,6 +27,7 @@ return [
 
     //new registration and login
     'sign_up' => 'Sign up',
+    'sign_in' => 'Sign in',
     'login' => 'Login',
     'send_mail' => 'Send verification email',
     'login_twitter' => 'Login with Twitter',
