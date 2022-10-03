@@ -26,7 +26,7 @@ return [
     'traditional_chinese' => 'Traditional Chinese',
 
     //new registration and login
-    'sign-up' => 'Sign up',
+    'sign_up' => 'Sign up',
     'login' => 'Login',
     'send_mail' => 'Send verification email',
     'login_twitter' => 'Login with Twitter',

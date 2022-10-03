@@ -26,7 +26,7 @@ return [
     'traditional_chinese' => '繁體中文',
 
     //new registration and login
-    'sign-up' => '新規登録',
+    'sign_up' => '新規登録',
     'login' => 'ログイン',
     'send_mail' => '確認メールを送信',
     'login_twitter' => 'Twitterでログイン',
@@ -50,4 +50,5 @@ return [
 
     // error message
     'not_found' => '404 見つかりません'
+
 ];

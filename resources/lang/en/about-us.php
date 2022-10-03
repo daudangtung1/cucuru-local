@@ -24,5 +24,5 @@ return [
 
     'about_website' => 'About this website',
 
-    'description' => 'CucuruFans is a creator support platform.<br/><br/>CucuruFans is、<br/>Illustrator, cartoonist, cosplayer, game maker, VTuber, etc.<br/>This is a service that allows creators who are active in various fields to obtain the funds necessary for their creative activities.<br/>Anyone can register for free and get support from fans who want to support you.',
+    'description' => 'CucuruFans is a creator support platform.\n\nCucuruFans is、\nIllustrator, cartoonist, cosplayer, game maker, VTuber, etc.\nThis is a service that allows creators who are active in various fields to obtain the funds necessary for their creative activities.\nAnyone can register for free and get support from fans who want to support you.',
 ];

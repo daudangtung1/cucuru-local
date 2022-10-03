@@ -25,9 +25,9 @@ return [
 
     // 7.4, 7.5
     'ranking' => 'Ranking',
-    'ranking_title' => 'Top ranking<br/>Popular creator',
+    'ranking_title' => 'Top ranking\nPopular creator',
     'recommendation' => 'Recommendation',
-    'recommendation_title' => 'Carefully selected by CucuruFans<br/>Recommended creators',
+    'recommendation_title' => 'Carefully selected by CucuruFans\nRecommended creators',
     'hot' => 'hot',
     'hot_title' => 'Soaring creators',
 
@@ -36,6 +36,6 @@ return [
 
     // 9.0. 10.0
     'benefits_title' => 'Participation benefits',
-    'can_be_view' => 'All content of this plan<br/>Can be viewed',
-    'communicate' => 'With this creator<br/>You can communicate by comment or message',
+    'can_be_view' => 'All content of this plan\nCan be viewed',
+    'communicate' => 'With this creator\nYou can communicate by comment or message',
 ];
