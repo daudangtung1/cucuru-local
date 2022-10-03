@@ -1,4 +1,5 @@
 <?php
+
 return [
     'page_title' => '通知',
 
@@ -26,4 +27,10 @@ return [
     'following_creator' => '(フォロー中クリエイター)',
     'subscribing_creator' => '(購読中クリエイター)',
     'notified_irregularly' => '(不定期に通知されます)',
+    'liked_your_tweet' => 'あなたのツイートを高く評価しました',
+    'notification' => '通知',
+
+    'message' => [
+        'no_notification' => '通知なし',
+    ],
 ];

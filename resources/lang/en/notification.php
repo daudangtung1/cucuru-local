@@ -26,8 +26,9 @@ return [
     'following_creator' => '(Following creator)',
     'subscribing_creator' => '(Subscribing creator)',
     'notified_irregularly' => '(Notified irregularly)',
-
     'message' => [
         'no_notification' => 'No notification',
     ],
+    'liked_your_tweet' =>'liked your tweet',
+    'notification'=>'Notification',
 ];
