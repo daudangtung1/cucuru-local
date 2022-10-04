@@ -3,6 +3,8 @@
 namespace App\Utils;
 
 
+use Illuminate\Support\Facades\File;
+
 class FolderHelper
 {
     private static $instance;
@@ -95,5 +97,36 @@ class FolderHelper
         } else {
             return $fullPathFiles;
         }
+    }
+
+    public function getAllLocaleFileInFolder($localeFolder = '')
+    {
+        $files = File::allFiles(resource_path("lang\\$localeFolder"));
+        $resourceFilePath = resource_path("lang\\$localeFolder\\");
+
+        $fileData = array_map(function ($file) use ($resourceFilePath, $localeFolder) {
+            $filePath = $file->getRealPath();
+            $basePath = str_replace($resourceFilePath, '', $filePath);
+            $fileKey = $localeFolder . '.' . str_replace(['\\', '.php'], ['.', ''], $basePath);
+
+            return [
+                'fileKey' => $fileKey,
+                'filePath' => $filePath,
+                'basePath' => $basePath,
+                'baseName' => $file->getBasename(),
+            ];
+        }, $files);
+
+        return $fileData;
+    }
+
+    public function getContentLocaleFile($file = [])
+    {
+        if (empty($file)) return [];
+
+        $fileData = include($file['filePath']);
+        if (empty($fileData)) return [];
+
+        return convert_associative_array_to_flatten_array($fileData, $file['fileKey']);
     }
 }
