@@ -30,7 +30,7 @@ class PlanController extends ApiController
     {
         try {
             if (!$this->customValidate($request, [
-                'monthly_fee' => 'required|numeric',
+                'monthly_fee' => 'required|numeric|min:0|max:100000',
                 'name' => 'required|max:255',
                 'genre_id' => 'required|numeric',
                 'description' => 'sometimes|string|max:300',
@@ -43,6 +43,10 @@ class PlanController extends ApiController
             $planData = $request->only('name', 'monthly_fee', 'genre_id', 'viewing_restriction', 'set_back_number_sale');
             $this->transactionStart();
             $plan = $this->planService->create($planData);
+
+            if (isset($plan['error'])) {
+                return $this->responseFail($plan['error']);
+            }
 
             return $this->responseSuccess($plan, trans('plan.message.create_success'));
         } catch (CustomException $exception) {
@@ -77,6 +81,10 @@ class PlanController extends ApiController
         $planData = $request->only('name', 'monthly_fee', 'genre_id', 'viewing_restriction', 'set_back_number_sale');
         $this->transactionStart();
         $plan = $this->planService->update($plan, $planData);
+
+        if (isset($plan['error'])) {
+            return $this->responseFail($plan['error']);
+        }
 
         return $this->responseSuccess($plan, trans('plan.message.update_success'));
     }
