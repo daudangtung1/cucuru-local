@@ -27,6 +27,7 @@ return [
 
     //new registration and login
     'sign_up' => '新規登録',
+    'sign_in' => 'ログイン',
     'login' => 'ログイン',
     'send_mail' => '確認メールを送信',
     'login_twitter' => 'Twitterでログイン',
