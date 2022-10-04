@@ -26,6 +26,10 @@ Route::post('logout', [\App\Http\Controllers\Auth\AuthenticatedController::class
 Route::post('/v1/auth/login', LoginController::class);
 Route::get('/v1/prerequisites', [PrerequisiteController::class, 'getPageInfo']);
 
+Route::get('/v1/faqs', [FaqController::class, 'list']);
+Route::get('/v1/faqs/{id}', [FaqController::class, 'show']);
+
+
 Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api\V1',
@@ -36,9 +40,7 @@ Route::group([
     Route::get('posts/{id}', 'PostController@show');
     Route::put('posts/{id}', 'PostController@update');
     Route::delete('posts/{id}', 'PostController@destroy');
-
-    Route::get('/faqs', [FaqController::class, 'list']);
-    Route::get('/faqs/{id}', [FaqController::class, 'show']);
+   
     Route::post('/faqs', [FaqController::class, 'create']);
 
     Route::post('comment', 'CommentController@store');
