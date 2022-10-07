@@ -37,7 +37,7 @@ class AuthenticatedController extends ApiController
 
                 $data['user'] = $user;
 
-                return $this->responseSuccess($claim->getData(), __('auth.cognito.login_success'));
+                return $this->responseSuccess($data, __('auth.cognito.login_success'));
             } else {
                 return $this->responseFail($claim);
             }
