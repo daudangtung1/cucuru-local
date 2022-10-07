@@ -40,7 +40,7 @@ Route::group([
     Route::get('posts/{id}', 'PostController@show');
     Route::put('posts/{id}', 'PostController@update');
     Route::delete('posts/{id}', 'PostController@destroy');
-   
+
     Route::post('/faqs', [FaqController::class, 'create']);
 
     Route::post('comment', 'CommentController@store');

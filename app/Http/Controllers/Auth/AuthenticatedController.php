@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\ApiController;
+use App\Models\User;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Ellaisys\Cognito\Auth\AuthenticatesUsers as CognitoAuthenticatesUsers;
 use Ellaisys\Cognito\AwsCognitoClaim;
@@ -30,6 +31,12 @@ class AuthenticatedController extends ApiController
 
         if ($claim = $this->attemptLogin($collection, 'api', 'email', 'password', true)) {
             if ($claim instanceof AwsCognitoClaim) {
+                $data = $claim->getData();
+
+                $user = User::where('email', $request->email)->first();
+
+                $data['user'] = $user;
+
                 return $this->responseSuccess($claim->getData(), __('auth.cognito.login_success'));
             } else {
                 return $this->responseFail($claim);
@@ -52,7 +59,6 @@ class AuthenticatedController extends ApiController
 
             //Authenticate User
             $claim = Auth::guard($guard)->attempt($credentials, $rememberMe);
-
         } catch (NoLocalUserException $e) {
             if (config('cognito.add_missing_local_user_sso')) {
                 $response = $this->createLocalUser($credentials, $keyPassword);
@@ -91,7 +97,8 @@ class AuthenticatedController extends ApiController
         }
     }
 
-    public function refreshToken(Request $request) {
+    public function refreshToken(Request $request)
+    {
         if (!$this->customValidate($request, [
             'email' => 'required|email',
             'refresh_token' => 'required',
@@ -112,7 +119,8 @@ class AuthenticatedController extends ApiController
         return $this->responseSuccess($claim['AuthenticationResult']);
     }
 
-    public function logout() {
+    public function logout()
+    {
         try {
             $claim = Auth::guard('api')->globalSignOut(request()->bearerToken());
 
