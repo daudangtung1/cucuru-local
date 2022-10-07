@@ -89,10 +89,8 @@ class Handler extends ExceptionHandler
 
         // show detail error in json format
         if (config('app.env') == 'production' && config('app.debug') == false) {
-            return $this->response(
-                true,
-                [],
-                __('error.level_3_failed'),
+            return response()->json(
+                ['_messages' => $exception->getMessage()],
                 AppConfig::HTTP_RESPONSE_STATUS_ERROR
             );
         }
