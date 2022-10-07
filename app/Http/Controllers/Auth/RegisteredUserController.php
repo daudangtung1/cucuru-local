@@ -4,19 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Cognito\CognitoClient;
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Ellaisys\Cognito\Auth\RegistersUsers;
-use Ellaisys\Cognito\AwsCognitoClient;
 use Ellaisys\Cognito\Exceptions\InvalidUserFieldException;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends ApiController
 {
@@ -31,14 +25,11 @@ class RegisteredUserController extends ApiController
     public function signup(Request $request, array $clientMetadata = null)
     {
         $cognitoRegistered = false;
-        $user = [];
 
-        if (!$this->customValidate($request, [
+        $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required'],
-        ])) {
-            return $this->responseFail($this->getValidationErrors());
-        }
+        ]);
 
         $data = $request->all();
         $collection = collect($data);
@@ -48,9 +39,9 @@ class RegisteredUserController extends ApiController
 
         if (isset($cognitoRegistered['UserConfirmed']) && isset($cognitoRegistered['UserSub'])) {
             User::create([
-               'username' => $request->email,
-               'email' => $request->email,
-               'password' => Hash::make($request->password),
+                'username' => $request->email,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
             ]);
         }
 
