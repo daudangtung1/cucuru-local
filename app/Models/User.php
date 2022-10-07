@@ -73,4 +73,9 @@ class User extends Authenticatable
     public function notificationSetting() {
         return $this->hasOne(NotificationSetting::class);
     }
+
+    public function affiliate()
+    {
+        return $this->hasOne(Affiliate::class);
+    }
 }

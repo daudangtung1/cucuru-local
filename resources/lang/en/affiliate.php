@@ -27,4 +27,7 @@ return [
     'confirm_destination' => 'Confirm destination',
     'confirm_send' => 'Send an email to.\nIs it OK?',
     'response_send' => 'To the email address you entered\nI sent an e-mail.',
+
+    'register_success' => 'Register affiliate success',
+    'has_been_registered' => 'User has been already registered affiliate'
 ];
