@@ -61,7 +61,7 @@ class Handler extends ExceptionHandler
     {
         $isErrorShown = config('app.env') == 'production' && config('app.debug') == false;
         TransactionHelper::getInstance()->stop(); // prevent loss transaction
-        logError($exception);
+        // logError($exception);
 
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
