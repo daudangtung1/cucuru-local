@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('email')->nullable();
-            $table->string('affiliate_link')->nullable();
+            $table->string('affiliate_code', 6)->nullable()->index();
             $table->timestamps();
         });
     }

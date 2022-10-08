@@ -12,7 +12,7 @@ class Affiliate extends Model
     protected $fillable = [
         'user_id',
         'email',
-        'affiliate_link',
+        'affiliate_code',
     ];
 
     protected $dates = ['created_at', 'updated_at'];
