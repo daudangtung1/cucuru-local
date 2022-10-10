@@ -49,10 +49,13 @@ Route::group([
     Route::post('user/profile', 'ProfileController@update');
     Route::get('user/follows', 'UserController@getFollow');
     Route::get('user/followers', 'UserController@getFollower');
+    Route::get('/user/invite-code', 'UserController@getInviteCode');
 
     Route::post('plans', 'PlanController@store');
     Route::put('plans/{id}', 'PlanController@update');
 
     Route::get('notifications', 'NotificationController@index');
     Route::post('notification-setting/change', 'NotificationSettingController@update');
+
+    Route::post('affiliate/register', 'AffiliateController@register');
 });
