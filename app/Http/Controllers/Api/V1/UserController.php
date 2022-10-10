@@ -109,4 +109,9 @@ class UserController extends ApiController
 
         return $this->responseSuccess($follows['data']);
     }
+
+    public function getInviteCode()
+    {
+        return $this->responseSuccess(['aff_code' => $this->userService->getInviteCode()]);
+    }
 }

@@ -45,4 +45,9 @@ class UserService extends BaseService
 
         return $follows;
     }
+
+    public function getInviteCode()
+    {
+        return Auth::guard('api')->user()->affiliate->code ?? null;
+    }
 }

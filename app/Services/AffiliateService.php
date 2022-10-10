@@ -26,7 +26,11 @@ class AffiliateService extends BaseService
             }
 
             $data['user_id'] = Auth::guard('api')->id();
-            $data['affiliate_code'] = $this->genAffiliateCode();
+            $data['code'] = $this->genAffiliateCode();
+
+            if (is_null($data['code'])) {
+                return ['error' => __('affiliate.something_wrong_when_gen_code')];
+            }
 
             return Affiliate::create($data);
         } catch (\PDOException $exception) {
@@ -36,13 +40,17 @@ class AffiliateService extends BaseService
         }
     }
 
-    protected function genAffiliateCode()
+    protected function genAffiliateCode(&$retry = 1)
     {
         $affiliateCode = substr(str_shuffle(str_repeat('0123456789', 5)), 0, 6);
 
-        if (!Affiliate::where('affiliate_code', $affiliateCode)->first()) {
+        if (!Affiliate::where('code', $affiliateCode)->first()) {
             return $affiliateCode;
         } else {
+            $retry ++;
+            if ($retry > 10) {
+                return null;
+            }
             $this->genAffiliateCode();
         }
     }
