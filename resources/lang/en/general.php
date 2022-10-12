@@ -21,7 +21,7 @@ return [
     //language
     'language' => 'Language',
     'japanese' => '日本語',
-    'english',
+    'english' => 'English',
     'simplified_chinese' => 'Simplified Chinese',
     'traditional_chinese' => 'Traditional Chinese',
 
