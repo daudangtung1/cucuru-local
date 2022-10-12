@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\V1\PrerequisiteController;
+use App\Http\Controllers\Api\V1\StripeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,4 +59,13 @@ Route::group([
     Route::post('notification-setting/change', 'NotificationSettingController@update');
 
     Route::post('affiliate/register', 'AffiliateController@register');
+
+    Route::group([
+        'namespace' => 'stripe',
+    ], function (){
+        Route::get('register-user', [StripeController::class, 'registerUser']);
+        Route::get('update-payment-method', [StripeController::class, 'updatePaymentMethod']);
+        Route::post('add-payment-method', [StripeController::class, 'addPaymentMethod']);
+        Route::get('pay', [StripeController::class, 'pay']);
+    });
 });
