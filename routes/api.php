@@ -58,6 +58,7 @@ Route::group([
     Route::get('notifications', 'NotificationController@index');
     Route::post('notification-setting/change', 'NotificationSettingController@update');
 
+    Route::get('/categories', 'CategoryController@index');
     Route::post('affiliate/register', 'AffiliateController@register');
 
     Route::group([
