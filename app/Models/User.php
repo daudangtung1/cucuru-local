@@ -6,11 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Billable;
     const ACTIVE = 1;
     const INACTIVE  = 0;
     const MALE = 1;
@@ -77,5 +78,9 @@ class User extends Authenticatable
     public function affiliate()
     {
         return $this->hasOne(Affiliate::class);
+    }
+
+    public function paymentHistories () {
+        return $this->hasMany(PaymentHistory::class, 'payment_user_id');
     }
 }
