@@ -31,4 +31,6 @@ return [
     'register_success' => 'Register affiliate success',
     'has_been_registered' => 'User has been already registered affiliate',
     'something_wrong_when_gen_code' => 'Something was wrong when generate affiliate code for user',
+
+    'message_register_affiliate' => 'You are not in the Affiliate program, please join the affiliate program <a href="/affiliate-form">here</a>',
 ];

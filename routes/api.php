@@ -50,7 +50,7 @@ Route::group([
     Route::post('user/profile', 'ProfileController@update');
     Route::get('user/follows', 'UserController@getFollow');
     Route::get('user/followers', 'UserController@getFollower');
-    Route::get('/user/invite-code', 'UserController@getInviteCode');
+    Route::get('affiliates/me/code', 'UserController@getInviteCode');
 
     Route::post('plans', 'PlanController@store');
     Route::put('plans/{id}', 'PlanController@update');
