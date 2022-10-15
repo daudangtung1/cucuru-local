@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Cognito\CognitoClient;
+use App\Events\AffiliateProgramChecking;
 use App\Http\Controllers\ApiController;
 use App\Models\User;
 use Ellaisys\Cognito\Auth\RegistersUsers;
@@ -43,6 +44,10 @@ class RegisteredUserController extends ApiController
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
+
+            if ($request->aff_code) {
+                event(new AffiliateProgramChecking($request->aff_code));
+            }
         }
 
         return $this->responseSuccess($cognitoRegistered, __('auth.cognito.signup_success'));
