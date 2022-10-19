@@ -9,10 +9,12 @@
         "doctrine/dbal": "^3.4",
         "ellaisys/aws-cognito": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^2.7",
         "laravel/cashier": "^14.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "league/flysystem-aws-s3-v3": "*",
         "predis/predis": "^2.0"
     },
     "require-dev": {

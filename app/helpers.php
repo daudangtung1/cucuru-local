@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Log;
 use App\Exceptions\CustomException;
 use Illuminate\Support\Facades\Storage;
-//use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManagerStatic as Image;
 
 if (!function_exists('isAuth')) {
     function isAuth()
@@ -606,5 +606,21 @@ if (!function_exists('convert_associative_array_to_flatten_array')) {
         }
 
         return $result;
+    }
+}
+
+if (!function_exists('get_file_type')) {
+    function get_file_type($file) {
+        $mimeType = $file->getMimeType();
+
+        if (str_contains($mimeType, 'image')) {
+            return 'image';
+        }
+
+        if (str_contains($mimeType, 'video')) {
+            return 'video';
+        }
+
+        return null;
     }
 }

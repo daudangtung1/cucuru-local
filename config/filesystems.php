@@ -70,4 +70,6 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    'limit_post_media' => 4,
+
 ];
