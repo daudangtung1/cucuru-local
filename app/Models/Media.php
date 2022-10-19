@@ -22,8 +22,8 @@ class Media extends Model
     protected $fillable = [
         'link',
         'type',
-        'mediatable_type',
-        'mediatable_id',
+        'mediaable_type',
+        'mediaable_id',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'published_at', 'deleted_at'];
