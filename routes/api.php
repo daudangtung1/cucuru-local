@@ -39,7 +39,7 @@ Route::group([
     Route::get('posts', 'PostController@index');
     Route::post('posts', 'PostController@store');
     Route::get('posts/{id}', 'PostController@show');
-    Route::put('posts/{id}', 'PostController@update');
+    Route::post('posts/{id}', 'PostController@update');
     Route::delete('posts/{id}', 'PostController@destroy');
 
     Route::post('/faqs', [FaqController::class, 'create']);
@@ -50,7 +50,7 @@ Route::group([
     Route::post('user/profile', 'ProfileController@update');
     Route::get('user/follows', 'UserController@getFollow');
     Route::get('user/followers', 'UserController@getFollower');
-    Route::get('/user/invite-code', 'UserController@getInviteCode');
+    Route::get('affiliates/me/code', 'UserController@getInviteCode');
 
     Route::post('plans', 'PlanController@store');
     Route::put('plans/{id}', 'PlanController@update');
@@ -58,6 +58,7 @@ Route::group([
     Route::get('notifications', 'NotificationController@index');
     Route::post('notification-setting/change', 'NotificationSettingController@update');
 
+    Route::get('/categories', 'CategoryController@index');
     Route::post('affiliate/register', 'AffiliateController@register');
 
     Route::group([

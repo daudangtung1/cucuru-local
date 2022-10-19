@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Post;
+use App\Rules\ValidateDeleteMediaOfPost;
+use App\Rules\ValidateLimitNumberMediaOfPost;
 use App\Services\PostService;
 use App\Utils\AppConfig;
 use Illuminate\Http\Request;
@@ -58,16 +61,19 @@ class PostController extends ApiController
     public function store(Request $request)
     {
         if (!$this->customValidate($request, [
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'status' => 'required|numeric|in:1,2',
+            'content' => 'sometimes',
+            'is_adult' => 'required|in:0,1',
+            'type' => 'required|in:' . implode(',', Post::TYPE),
+            'published_at' => 'sometimes|date_format:Y-m-d H:i:s|after:now',
+            'medias' => 'sometimes|array|max:' . config('filesystems.limit_post_media'),
+            'medias.*' => 'file|mimes:jpeg,png,jpg,gif,svg,mp4,mpeg,mov|max:10240',
+            'plan_id' => 'required|exists:plans,id',
         ])) {
             return $this->responseFail($this->getValidationErrors());
         }
 
-        $postData = $request->only('title', 'content', 'status');
         $this->transactionStart();
-        $post = $this->postService->create($postData);
+        $post = $this->postService->create($request->only('content', 'medias', 'published_at', 'is_adult', 'type', 'plan_id'));
 
         return $this->responseSuccess($post, trans('post.message.create_success'));
     }
@@ -112,24 +118,31 @@ class PostController extends ApiController
             }
 
             if (!$this->customValidate($request, [
-                'content' => 'string|sometimes',
-                'title' => 'string|sometimes|max:255',
-                'status' => 'numeric|in:1,2|sometimes',
+                'content' => 'sometimes',
+                'is_adult' => 'sometimes|in:0,1',
+                'type' => 'sometimes|in:' . implode(',', Post::TYPE),
+                'delete_medias' => ['sometimes', 'array', new ValidateDeleteMediaOfPost($post)],
+                'medias' => ['sometimes', 'array', new ValidateLimitNumberMediaOfPost($post)],
+                'medias.*' => 'file|mimes:jpeg,png,jpg,gif,svg,mp4,mpeg,mov|max:10240',
+                'published_at' => 'sometimes|date_format:Y-m-d H:i:s|after:now',
+                'plan_id' => 'sometimes|exists:plans,id',
             ])) {
                 return $this->responseFail($this->getValidationErrors());
             }
 
             $postData = $request->only(
-                'status',
-                'title',
+                'type',
+                'medias',
                 'content',
+                'is_adult',
+                'delete_medias'
             );
 
             $this->transactionStart();
 
             $post = $this->postService->update($post, $postData);
 
-            return $this->responseSuccess(['post_id' => $post->id], trans('post.message.update_success'));
+            return $this->responseSuccess($post, trans('post.message.update_success'));
         } catch (CustomException $exception) {
             return $this->responseFail($exception);
         }

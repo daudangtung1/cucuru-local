@@ -27,4 +27,11 @@ return [
     'confirm_destination' => '送信先確認',
     'confirm_send' => 'にメールを送信します。\nよろしいですか？',
     'response_send' => '入力いただいたメールアドレスに\nメールを送信しました。',
+
+
+    'register_success' => 'アフィリエイトの成功を登録する',
+    'has_been_registered' => 'ユーザーはすでにアフィリエイトに登録されています',
+    'something_wrong_when_gen_code' => 'ユーザーのアフィリエイト コードを生成するときに問題が発生しました',
+
+    'message_register_affiliate' => 'あなたはアフィリエイト プログラムに参加していません。<a href="/affiliate-form">こちら</a>からアフィリエイト プログラムに参加してください',
 ];

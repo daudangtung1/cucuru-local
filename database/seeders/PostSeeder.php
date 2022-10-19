@@ -18,7 +18,6 @@ class PostSeeder extends Seeder
     {
         for ($i = 0; $i < 20; $i++) {
             Post::create([
-                'title' => "Post {$i}",
                 'status' => rand(0, 1),
                 'created_by' => rand(1, 10),
                 'published_at' => \Carbon\Carbon::now(),

@@ -3,6 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\AffiliateProgramChecking;
+use App\Models\Affiliate;
+use AWS\CRT\Log;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -27,7 +29,7 @@ class RegisterAccountWithAffiliateCode
     public function handle(AffiliateProgramChecking $event)
     {
         if (!empty($event->code)) {
-
+            //TODO : Chỗ này mai sau làm cộng coin
         }
     }
 }

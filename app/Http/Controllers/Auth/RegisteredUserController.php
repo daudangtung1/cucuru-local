@@ -45,8 +45,8 @@ class RegisteredUserController extends ApiController
                 'password' => Hash::make($request->password),
             ]);
 
-            if ($request->affiliate_code) {
-                event(new AffiliateProgramChecking($request->affiliate_code));
+            if ($request->aff_code) {
+                event(new AffiliateProgramChecking($request->aff_code));
             }
         }
 

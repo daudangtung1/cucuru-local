@@ -3,8 +3,11 @@
 namespace App\Services;
 
 use App\Exceptions\CustomException;
+use App\Models\Media;
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostService extends BaseService
 {
@@ -32,14 +35,6 @@ class PostService extends BaseService
         }
 
         $posts = new Post();
-
-        if (isset($filterData['title'])) {
-            $posts = $posts->whereRaw("title LIKE CONCAT('%',CONVERT('{$filterData['title']}', BINARY),'%')");
-        }
-
-        if (isset($filterData['status']) && in_array($filterData['status'], [Post::ACTIVE, Post::INACTIVE])) {
-            $posts = $posts->where('status', $filterData['status']);
-        }
 
         $posts = $posts->orderBy($fieldSort, $typeSort)->paginate($limit);
 
@@ -73,7 +68,13 @@ class PostService extends BaseService
     {
         try {
             $postData['created_by'] = Auth::guard('api')->id();
+
+            if (empty($postData['published_at'])) {
+                $postData['published_at'] = Carbon::now();
+            }
+
             $post = Post::create($postData);
+            $this->saveMedia($post, $postData);
 
             return $post;
         } catch (\PDOException $exception) {
@@ -92,9 +93,20 @@ class PostService extends BaseService
     public function update($post, $postData)
     {
         try {
-            $post->update(array_filter($postData));
+            if (isset($postData['delete_medias'])) {
+                $deleteMedias = Media::whereIn('id', $postData['delete_medias'])->get();
 
-            return $post;
+                foreach ($deleteMedias as $deleteMedia) {
+                    Storage::disk('s3')->delete($deleteMedia->link);
+                }
+
+                Media::destroy($postData['delete_medias']);
+            }
+
+            $post->update(array_filter($postData));
+            $this->saveMedia($post, $postData);
+
+            return $post->refresh();
         } catch (\PDOException $exception) {
             throw new CustomException(null, CustomException::DATABASE_LEVEL, null, 0, $exception);
         } catch (\Exception $exception) {
@@ -118,5 +130,26 @@ class PostService extends BaseService
         } catch (\Exception $exception) {
             throw new CustomException(null, CustomException::APP_LEVEL, null, 0, $exception);
         }
+    }
+
+    private function saveMedia($post, $postData) {
+        if (isset($postData['medias'])) {
+            $alias = $post->getMorphClass();
+
+            foreach ($postData['medias'] as $media) {
+                $mediaType = get_file_type($media);
+                if (is_null($mediaType)) continue;
+
+                $mediaName = $media->getClientOriginalName();
+                if (!$media->storeAs("posts/$post->id", $mediaName, 's3')) continue;
+                Media::create([
+                    "mediatable_type" => $alias,
+                    "mediatable_id" => $post->id,
+                    "link" => "/posts/$post->id/$mediaName",
+                    "type" => Media::MIMETYPE[$mediaType],
+                ]);
+            }
+        }
+
     }
 }

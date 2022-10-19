@@ -112,6 +112,12 @@ class UserController extends ApiController
 
     public function getInviteCode()
     {
-        return $this->responseSuccess(['aff_code' => $this->userService->getInviteCode()]);
+        $affCode = $this->userService->getInviteCode();
+
+        if ($affCode) {
+            return $this->responseSuccess(['aff_code' => $this->userService->getInviteCode()]);
+        }
+
+        return $this->responseFail(__('affiliate.message_register_affiliate'));
     }
 }

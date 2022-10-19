@@ -33,6 +33,6 @@ class AffiliateProgramChecking
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel('checking-affiliate-channel');
     }
 }
