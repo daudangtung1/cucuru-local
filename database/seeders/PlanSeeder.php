@@ -16,18 +16,15 @@ class PlanSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::get()[0];
-        $plan = Plan::where('id', 1)->first();
-
-        if ($user && !$plan) {
+        for ($i = 0; $i < 10; $i++) {
             Plan::create([
-                'name' => 'Test Plan',
-                'monthly_fee' => '1000',
-                'created_by' => $user->id,
-                'description' => 0,
+                'name' => "Test Plan $i",
+                'monthly_fee' => rand(0, 5),
+                'user_id' => rand(1, 10),
                 'genre_id' => 1,
+                'description' => 0,
                 'viewing_restriction' => 0,
-                'set_back_number_sale' => 0
+                'set_back_number_sale' => 0,
             ]);
         }
     }

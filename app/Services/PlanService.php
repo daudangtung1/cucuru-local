@@ -29,7 +29,7 @@ class PlanService extends BaseService
                 return ['error' => __('plan.message.greater_limit_free_plan', ['limit' => self::LIMIT_FREE_PLAN])];
             }
 
-            $planData['created_by'] = Auth::guard('api')->id();
+            $planData['user_id'] = Auth::guard('api')->id();
 
             return Plan::create($planData);
         } catch (\PDOException $exception) {

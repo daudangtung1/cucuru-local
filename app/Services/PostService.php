@@ -143,10 +143,13 @@ class PostService extends BaseService
                 $mediaName = $media->getClientOriginalName();
                 if (!$media->storeAs("posts/$post->id", $mediaName, 's3')) continue;
                 Media::create([
+                    "disk" => "s3",
                     "mediaable_type" => $alias,
                     "mediaable_id" => $post->id,
-                    "link" => "/posts/$post->id/$mediaName",
+                    "size" => $media->getSize(),
                     "type" => Media::MIMETYPE[$mediaType],
+                    "link" => "/posts/$post->id/$mediaName",
+                    "mime_type" => $media->getClientMimeType(),
                 ]);
             }
         }

@@ -18,7 +18,6 @@ class PostSeeder extends Seeder
     {
         for ($i = 0; $i < 20; $i++) {
             Post::create([
-                'status' => rand(0, 1),
                 'created_by' => rand(1, 10),
                 'published_at' => \Carbon\Carbon::now(),
                 'content' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
@@ -27,6 +26,8 @@ class PostSeeder extends Seeder
                     the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
                     with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
                     publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                'type' => rand(1, 4),
+                'plan_id' => 0,
             ]);
         }
     }

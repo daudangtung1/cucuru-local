@@ -58,16 +58,6 @@ class Post extends Model
         return $this->morphMany(Media::class, 'mediaable');
     }
 
-    public function images()
-    {
-        return $this->medias()->where('type', Media::TYPE_IMAGE)->get('id, link');
-    }
-
-    public function videos()
-    {
-        return $this->medias()->where('type', Media::TYPE_VIDEO)->get('id, link');
-    }
-
     public function getNumberMediaOfPostAttribute()
     {
         return $this->medias()->count();

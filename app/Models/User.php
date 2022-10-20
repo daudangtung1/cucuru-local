@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function plans()
     {
-        return $this->hasMany(Plan::class, 'created_by', 'id');
+        return $this->hasMany(Plan::class);
     }
 
     public function follows()

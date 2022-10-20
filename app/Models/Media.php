@@ -9,9 +9,10 @@ class Media extends Model
 {
     use HasFactory;
 
-    const TYPE_IMAGE = 1;
-    const TYPE_VIDEO = 2;
-
+    const IMAGE_TYPE = 1;
+    const THUMBNAIL_BLUR_TYPE = 2;
+    const THUMBNAIL_ORIGIN_TYPE = 3;
+    const VIDEO_TYPE = 4;
     const MIMETYPE = [
         'image' => 1,
         'video' => 2,
@@ -22,8 +23,11 @@ class Media extends Model
     protected $fillable = [
         'link',
         'type',
-        'mediaable_type',
+        'disk',
+        'size',
+        'mime_type',
         'mediaable_id',
+        'mediaable_type',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'published_at', 'deleted_at'];

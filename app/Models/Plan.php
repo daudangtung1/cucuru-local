@@ -16,10 +16,11 @@ class Plan extends Model
      */
     protected $fillable = [
         'name',
-        'created_by',
+        'user_id',
+        'genre_id',
         'monthly_fee',
         'description',
-        'genre_id',
+        'currency_unit_id',
         'viewing_restriction',
         'set_back_number_sale',
     ];
@@ -27,6 +28,6 @@ class Plan extends Model
     protected $dates = ['created_at', 'updated_at'];
 
     public function user() {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class);
     }
 }
