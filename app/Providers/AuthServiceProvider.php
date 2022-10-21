@@ -33,6 +33,5 @@ class AuthServiceProvider extends ServiceProvider
 
             return $user->id == $model->created_by;
         });
-        //
     }
 }

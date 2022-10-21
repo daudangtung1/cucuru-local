@@ -44,7 +44,15 @@ Route::group([
 
     Route::post('/faqs', [FaqController::class, 'create']);
 
-    Route::post('comment', 'CommentController@store');
+    // Group for comment
+    Route::group([
+        'prefix' => 'comments'
+    ], function () {
+        Route::get('/post/{postId}', 'CommentController@index');
+        Route::post('/', 'CommentController@store');
+        Route::delete('/{id}', 'CommentController@delete');
+    });
+
     Route::get('payments', 'PaymentController@index');
 
     Route::post('user/profile', 'ProfileController@update');

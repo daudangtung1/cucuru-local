@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Comment;
+use App\Models\Post;
+use App\Utils\AppConfig;
 use Illuminate\Http\Request;
 use App\Services\CommentService;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends ApiController
 {
@@ -24,13 +28,27 @@ class CommentController extends ApiController
         $this->commentService = new CommentService();
     }
 
+    public function index(Request $request, $postId)
+    {
+        $pageNo = $this->getValidPageNo($request->input('page'));
+        $limit = $this->getValidLimit($request->input('limit'), self::DEFAULT_LIMIT);
+
+        $comments = $this->commentService->getList($postId, $limit, $pageNo);
+
+        if (isset($comments['erorr'])) {
+            return $this->responseFail($comments['error']);
+        }
+
+        return $this->responseSuccess($comments);
+    }
+
     public function store(Request $request)
     {
         try {
             if (!$this->customValidate($request, [
                 'content' => 'required',
                 'commentable_id' => 'required',
-                'commentable_type' => 'required|in:' . implode(',', Comment::COMMENT_TYPE),
+                'commentable_type' => 'required|in:' . implode(',',  array_flip(Comment::COMMENT_TYPE)),
             ])) {
                 return $this->responseFail($this->getValidationErrors());
             }
@@ -47,5 +65,22 @@ class CommentController extends ApiController
         } catch (CustomException $e) {
             return $this->responseFail($e);
         }
+    }
+
+    public function delete($id)
+    {
+        $comment = $this->commentService->getById($id, false);
+
+        if (Gate::forUser(Auth::guard('api')->user())->denies('is-owner', $comment)) {
+            return $this->responseFail(trans('comment.message.can_not_delete'), "", AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHORIZED);
+        }
+
+        $result = $this->commentService->delete($comment);
+
+        if ($result) {
+            return $this->responseSuccess([], __('comment.message.delete_success'));
+        }
+
+        return $this->responseFail(__('comment.message.delete_fail'));
     }
 }

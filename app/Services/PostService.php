@@ -138,6 +138,7 @@ class PostService extends BaseService
 
             foreach ($postData['medias'] as $media) {
                 $mediaType = get_file_type($media);
+                $imageSize = getimagesize($media);
                 if (is_null($mediaType)) continue;
 
                 $mediaName = $media->getClientOriginalName();
@@ -147,6 +148,8 @@ class PostService extends BaseService
                     "mediaable_type" => $alias,
                     "mediaable_id" => $post->id,
                     "size" => $media->getSize(),
+                    "width" => $imageSize[0] ?? 0,
+                    "height" => $imageSize[1] ?? 0,
                     "type" => Media::MIMETYPE[$mediaType],
                     "link" => "/posts/$post->id/$mediaName",
                     "mime_type" => $media->getClientMimeType(),

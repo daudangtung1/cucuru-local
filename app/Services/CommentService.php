@@ -16,11 +16,31 @@ class CommentService extends BaseService
      */
     public function getById($id, $strict = true)
     {
-        $post = $strict ? Comment::find($id) : Comment::findOrFail($id);
-
-        return $post;
+        return $strict ? Comment::find($id) : Comment::findOrFail($id);
     }
 
+    public function getList($postId, $limit)
+    {
+        $post = (new PostService())->getById($postId);
+
+        if (empty($post)) {
+            return ['error' => trans('post.message.post_not_found')];
+        }
+
+        $comments = $post->comments()->with([
+            'comments',
+            'user',
+            'comments.user'])->paginate($limit);
+
+        return [
+            'data' => $comments->map(function ($comment) {
+                return $comment->only([
+                    'id', 'content', 'user', 'created_at', 'comments'
+                ]);
+            }),
+            'pagination' => $this->customPagination($comments)
+        ];
+    }
     /**
      * @param $postData
      * @return mixed
@@ -29,19 +49,44 @@ class CommentService extends BaseService
     public function create($commentData)
     {
         try {
-            $commentData['created_by'] = Auth::guard('api')->id();
+            $commentData['user_id'] = Auth::guard('api')->id();
 
-            if ($commentData['commentable_type'] == Comment::COMMENT_TYPE['POST']) {
-                $commentData['commentable_type'] = Post::class;
+            if ($commentData['commentable_type'] == (new Post)->getMorphClass()) {
+                $alias = (new Post)->getMorphClass();
+                $commentData['commentable_type'] = $alias;
                 $post = Post::find($commentData['commentable_id']);
+
                 if (empty($post)) {
                     return ['error' => trans('post.message.post_not_found')];
                 }
             }
 
-            $comment = Comment::create($commentData);
+            if ($commentData['commentable_type'] == (new Comment())->getMorphClass()) {
+                $alias = (new Comment())->getMorphClass();
+                $commentData['commentable_type'] = $alias;
+                $parentComment = $this->getById($commentData['commentable_id']);
 
-            return $comment;
+                if (empty($parentComment)) {
+                    return ['error' => trans('comment.message.comment_not_found')];
+                }
+
+                if ($parentComment->commentable_type === $alias) {
+                    $commentData['commentable_id'] = $parentComment->commentable_id;
+                }
+            }
+
+            return Comment::create($commentData);;
+        } catch (\PDOException $exception) {
+            throw new CustomException(null, CustomException::DATABASE_LEVEL, null, 0, $exception);
+        } catch (\Exception $exception) {
+            throw new CustomException(null, CustomException::APP_LEVEL, null, 0, $exception);
+        }
+    }
+
+    public function delete($comment)
+    {
+        try {
+            return $comment->delete();
         } catch (\PDOException $exception) {
             throw new CustomException(null, CustomException::DATABASE_LEVEL, null, 0, $exception);
         } catch (\Exception $exception) {

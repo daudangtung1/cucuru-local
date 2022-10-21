@@ -25,6 +25,8 @@ class Media extends Model
         'type',
         'disk',
         'size',
+        'width',
+        'height',
         'mime_type',
         'mediaable_id',
         'mediaable_type',
