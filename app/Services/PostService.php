@@ -18,7 +18,7 @@ class PostService extends BaseService
      * @param array $sortData
      * @return bool|mixed|null
      */
-    public function getListPost($limit, $pageNo, array $filterData, array $sortData)
+    public function get($limit, $pageNo, array $filterData, array $sortData)
     {
         $typeSort = 'desc';
         $defaultSortField = [

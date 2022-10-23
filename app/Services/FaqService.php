@@ -4,10 +4,29 @@ namespace App\Services;
 
 use App\Models\Faq;
 
-class FaqService extends BaseModelService
+class FaqService extends BaseService
 {
-    public function __construct(Faq $faq)
+    /**
+     * @param $id
+     * @param $strict
+     * @return mixed
+     */
+    public function getById($id, $strict = true)
     {
-        $this->model = $faq;
+        return $strict ? Faq::find($id) : Faq::findOrFail($id);
+    }
+
+    public function get($limit, $pageNo)
+    {
+        $faqs = Faq::query()->paginate($limit);
+
+        return [
+            'data' => $faqs->map(function ($faq) {
+                return $faq->only([
+                    'id', 'title', 'content',
+                ]);
+            }),
+            'pagination' => $this->customPagination($faqs)
+        ];
     }
 }

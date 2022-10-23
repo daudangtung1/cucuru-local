@@ -33,14 +33,14 @@ class CommentController extends ApiController
         $pageNo = $this->getValidPageNo($request->input('page'));
         $limit = $this->getValidLimit($request->input('limit'), self::DEFAULT_LIMIT);
 
-        $comments = $this->commentService->getList($postId, $limit, $pageNo);
+        $comments = $this->commentService->get($postId, $limit, $pageNo);
 
-        if (isset($comments['erorr'])) {
+        if (isset($comments['error'])) {
             return $this->responseFail($comments['error']);
         }
 
         $this->customPagination($comments['pagination']);
-        return $this->responseSuccess($comments);
+        return $this->responseSuccess($comments['data']);
     }
 
     public function store(Request $request)

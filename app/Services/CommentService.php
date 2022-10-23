@@ -18,8 +18,8 @@ class CommentService extends BaseService
     {
         return $strict ? Comment::find($id) : Comment::findOrFail($id);
     }
-
-    public function getList($postId, $limit, $pageNo)
+    
+    public function get($postId, $limit, $pageNo)
     {
         $post = (new PostService())->getById($postId);
 
@@ -30,17 +30,23 @@ class CommentService extends BaseService
         $comments = $post->comments()->with([
             'comments',
             'user',
-            'comments.user'])->paginate($limit);
+            'comments.user'
+        ])->paginate($limit);
 
         return [
             'data' => $comments->map(function ($comment) {
                 return $comment->only([
-                    'id', 'content', 'user', 'created_at', 'comments'
+                    'id',
+                    'content',
+                    'user',
+                    'created_at',
+                    'comments'
                 ]);
             }),
             'pagination' => $this->customPagination($comments)
         ];
     }
+
     /**
      * @param $postData
      * @return mixed

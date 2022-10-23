@@ -27,7 +27,7 @@ Route::post('logout', [\App\Http\Controllers\Auth\AuthenticatedController::class
 Route::post('/v1/auth/login', LoginController::class);
 Route::get('/v1/prerequisites', [PrerequisiteController::class, 'getPageInfo']);
 
-Route::get('/v1/faqs', [FaqController::class, 'list']);
+Route::get('/v1/faqs', [FaqController::class, 'index']);
 Route::get('/v1/faqs/{id}', [FaqController::class, 'show']);
 
 
@@ -42,7 +42,7 @@ Route::group([
     Route::post('posts/{id}', 'PostController@update');
     Route::delete('posts/{id}', 'PostController@destroy');
 
-    Route::post('/faqs', [FaqController::class, 'create']);
+    // Route::post('/faqs', [FaqController::class, 'create']);
 
     // Group for comment
     Route::group([

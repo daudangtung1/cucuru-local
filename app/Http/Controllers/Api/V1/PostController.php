@@ -46,7 +46,7 @@ class PostController extends ApiController
         $limit = $this->getValidLimit($request->input('limit'), self::DEFAULT_LIMIT);
 
         // Get list post by filter data
-        $posts = $this->postService->getListPost($limit, $pageNo, $filterData, $sortData);
+        $posts = $this->postService->get($limit, $pageNo, $filterData, $sortData);
         $this->customPagination($posts['pagination']);
 
         return $this->responseSuccess($posts['data']);
