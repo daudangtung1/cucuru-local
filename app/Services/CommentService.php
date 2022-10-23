@@ -19,7 +19,7 @@ class CommentService extends BaseService
         return $strict ? Comment::find($id) : Comment::findOrFail($id);
     }
 
-    public function getList($postId, $limit)
+    public function getList($postId, $limit, $pageNo)
     {
         $post = (new PostService())->getById($postId);
 

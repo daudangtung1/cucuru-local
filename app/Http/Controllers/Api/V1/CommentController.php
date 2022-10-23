@@ -39,6 +39,7 @@ class CommentController extends ApiController
             return $this->responseFail($comments['error']);
         }
 
+        $this->customPagination($comments['pagination']);
         return $this->responseSuccess($comments);
     }
 
