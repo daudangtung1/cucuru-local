@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "doctrine/dbal": "^3.4",
         "ellaisys/aws-cognito": "^1.0",
+        "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/cashier": "^14.2",
