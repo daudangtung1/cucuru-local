@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PlanService extends BaseService
 {
-    CONST LIMIT_RECORD = 4;
-    CONST LIMIT_FREE_PLAN = 1;
+    const LIMIT_RECORD = 4;
+    const LIMIT_FREE_PLAN = 1;
 
     public function getById($id, $strict = true)
     {

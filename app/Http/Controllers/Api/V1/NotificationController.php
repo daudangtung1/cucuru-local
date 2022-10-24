@@ -35,7 +35,7 @@ class NotificationController extends ApiController
         $limit = $this->getValidLimit($request->input('limit'), self::DEFAULT_LIMIT);
 
         $filterData = $request->only(['is_important']);
-        $notfications = $this->notificationService->getListNotification($limit, $pageNo, $filterData, $sortData);
+        $notfications = $this->notificationService->get($limit, $pageNo, $filterData, $sortData);
         $this->customPagination($notfications['pagination']);
 
         return $this->responseSuccess($notfications['data']);

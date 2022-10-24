@@ -40,6 +40,7 @@ class AffiliateController extends ApiController
         if (isset($affiliate['error'])) {
             return $this->responseFail($affiliate['error']);
         }
+
         dispatch(new SendEmailJob($request->only('email')));
 
         return $this->responseSuccess($affiliate, __('affiliate.register_success'));

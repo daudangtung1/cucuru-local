@@ -23,13 +23,14 @@ class StripeController extends ApiController
         PlanService $planService,
         PaymentHistoryService $paymentHistoryService
     ) {
+        parent::__construct();
         $this->planService = $planService;
         $this->paymentHistoryService = $paymentHistoryService;
     }
 
     public function registerUser() {
         try {
-            $user =  auth('api')->user();
+            $user = auth('api')->user();
             $user->createOrGetStripeCustomer();
 
             return $this->responseSuccess(trans('success'), trans('success'));

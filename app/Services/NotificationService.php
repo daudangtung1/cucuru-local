@@ -26,7 +26,7 @@ class NotificationService extends BaseService
      * @param array $sortData
      * @return bool|mixed|null
      */
-    public function getListNotification($limit, $pageNo, array $filterData, array $sortData)
+    public function get($limit, $pageNo, array $filterData, array $sortData)
     {
         $typeSort = 'desc';
         $defaultSortField = [
@@ -42,8 +42,7 @@ class NotificationService extends BaseService
             $typeSort = $sortData['type_sort'];
         }
 
-        $notifications = new Notification();
-        $notifications = $notifications->where('user_id', Auth::guard('api')->id());
+        $notifications = Notification::query()->where('user_id', Auth::guard('api')->id());
 
         if (isset($filterData['is_important'])) {
             $notifications = $notifications->where("is_important", $filterData['is_important']);
@@ -51,11 +50,9 @@ class NotificationService extends BaseService
 
         $notifications = $notifications->orderBy($fieldSort, $typeSort)->paginate($limit);
 
-        $notifications = [
+        return [
             'data' => $notifications,
             'pagination' => $this->customPagination($notifications)
         ];
-
-        return $notifications;
     }
 }

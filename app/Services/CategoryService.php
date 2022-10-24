@@ -22,7 +22,7 @@ class CategoryService extends BaseService
         return $category;
     }
 
-    public function getList($limit)
+    public function get($limit)
     {
         $categories = Category::paginate($limit);
         $categories = [

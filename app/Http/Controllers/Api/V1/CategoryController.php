@@ -6,8 +6,6 @@ use App\Http\Controllers\ApiController;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
-;
-
 class CategoryController extends ApiController
 {
     /**
@@ -27,7 +25,7 @@ class CategoryController extends ApiController
     public function index(Request $request)
     {
         $limit = $this->getValidLimit($request->input('limit'), self::DEFAULT_LIMIT);
-        $categories = $this->categoryService->getList($limit);
+        $categories = $this->categoryService->get($limit);
         $this->customPagination($categories['pagination']);
 
         return $this->responseSuccess($categories['data']);
