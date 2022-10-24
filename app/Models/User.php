@@ -46,6 +46,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['avatar_url'];
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'created_by');
@@ -82,5 +84,9 @@ class User extends Authenticatable
 
     public function paymentHistories () {
         return $this->hasMany(PaymentHistory::class, 'payment_user_id');
+    }
+
+    public function getAvatarUrlAttribute() {
+        return $this->profile->avatar_url ?? null;
     }
 }
