@@ -36,6 +36,7 @@ class PostService extends BaseService
 
         $posts = new Post();
 
+        $posts = $posts->where('user_id', $filterData['user_id'] ?? Auth::guard('api')->id());
         $posts = $posts->orderBy($fieldSort, $typeSort)->paginate($limit);
 
         // Đoạn này vẫn tạo bảng pivot và vẫn chọc vào cơ sở dữ liệu nên không thể ném nó ra ngoài controller được.
@@ -67,7 +68,7 @@ class PostService extends BaseService
     public function create($postData)
     {
         try {
-            $postData['created_by'] = Auth::guard('api')->id();
+            $postData['user_id'] = Auth::guard('api')->id();
 
             if (empty($postData['published_at'])) {
                 $postData['published_at'] = Carbon::now();

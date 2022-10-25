@@ -45,7 +45,7 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id', 'created_by');
+        return $this->belongsTo(User::class);
     }
 
     public function comments()
