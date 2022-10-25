@@ -19,9 +19,15 @@ class PasswordResetLinkController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        /*$request->validate([
             'email' => ['required', 'email'],
-        ]);
+        ]);*/
+
+        if (!$this->customValidate($request, [
+            'email' => ['required', 'email'],
+        ])) {
+            return $this->responseFail($this->getValidationErrors());
+        }
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we

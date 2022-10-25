@@ -28,12 +28,17 @@ class RegisteredUserController extends ApiController
     public function signup(Request $request, array $clientMetadata = null)
     {
         try {
-            $cognitoRegistered = false;
-
-            $request->validate([
+            /*$request->validate([
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required'],
-            ]);
+            ]);*/
+
+            if (!$this->customValidate($request, [
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required'],
+            ])) {
+                return $this->responseFail($this->getValidationErrors());
+            }
 
             $data = $request->all();
             $collection = collect($data);
