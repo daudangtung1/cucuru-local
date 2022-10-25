@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Services\CommentService;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\ApiController;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -73,7 +74,7 @@ class CommentController extends ApiController
         $comment = $this->commentService->getById($id, false);
 
         if (Gate::forUser(Auth::guard('api')->user())->denies('is-owner', $comment)) {
-            return $this->responseFail(trans('comment.message.can_not_delete'), "", AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHORIZED);
+            return $this->responseFail(trans('comment.message.can_not_delete'), "", Response::HTTP_FORBIDDEN);
         }
 
         $result = $this->commentService->delete($comment);

@@ -25,11 +25,15 @@ class CategoryService extends BaseService
     public function get($limit)
     {
         $categories = Category::paginate($limit);
-        $categories = [
-            'data' => $categories,
+
+        return [
+            'data' => $categories->map(function ($category) {
+                return $category->only([
+                    'id',
+                    'title',
+                ]);
+            }),
             'pagination' => $this->customPagination($categories)
         ];
-
-        return $categories;
     }
 }

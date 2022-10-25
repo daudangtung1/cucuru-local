@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Cognito\CognitoClient;
 use App\Events\AffiliateProgramChecking;
+use App\Exceptions\CustomException;
 use App\Http\Controllers\ApiController;
 use App\Models\User;
 use Ellaisys\Cognito\Auth\RegistersUsers;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends ApiController
 {
@@ -25,32 +27,36 @@ class RegisteredUserController extends ApiController
      */
     public function signup(Request $request, array $clientMetadata = null)
     {
-        $cognitoRegistered = false;
+        try {
+            $cognitoRegistered = false;
 
-        $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required'],
-        ]);
-
-        $data = $request->all();
-        $collection = collect($data);
-
-        //Register User in Cognito
-        $cognitoRegistered = $this->createCognitoUser($collection, $clientMetadata, config('cognito.default_user_group', null));
-
-        if (isset($cognitoRegistered['UserConfirmed']) && isset($cognitoRegistered['UserSub'])) {
-            User::create([
-                'username' => $request->email,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
+            $request->validate([
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required'],
             ]);
 
-            if ($request->aff_code) {
-                event(new AffiliateProgramChecking($request->aff_code));
-            }
-        }
+            $data = $request->all();
+            $collection = collect($data);
 
-        return $this->responseSuccess($cognitoRegistered, __('auth.cognito.signup_success'));
+            //Register User in Cognito
+            $cognitoRegistered = $this->createCognitoUser($collection, $clientMetadata, config('cognito.default_user_group', null));
+
+            if (isset($cognitoRegistered['UserConfirmed']) && isset($cognitoRegistered['UserSub'])) {
+                User::create([
+                    'username' => Str::random(15),
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ]);
+
+                if ($request->aff_code) {
+                    event(new AffiliateProgramChecking($request->aff_code));
+                }
+            }
+
+            return $this->responseSuccess($cognitoRegistered, __('auth.cognito.signup_success'));
+        } catch (CustomException $exception) {
+            return $this->responseFail($exception);
+        }
     }
 
     public function createCognitoUser(Collection $request, array $clientMetadata = null, string $groupname = null)

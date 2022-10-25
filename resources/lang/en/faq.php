@@ -7,4 +7,8 @@ return [
 
     'placeholder' => 'Example: Point',
     'text' => 'Especially Frequently Asked Questions',
+
+    'message' => [
+        'not_found' => 'Faq not found',
+    ]
 ];

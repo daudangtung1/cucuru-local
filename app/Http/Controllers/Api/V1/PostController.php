@@ -6,10 +6,10 @@ use App\Models\Post;
 use App\Rules\ValidateDeleteMediaOfPost;
 use App\Rules\ValidateLimitNumberMediaOfPost;
 use App\Services\PostService;
-use App\Utils\AppConfig;
 use Illuminate\Http\Request;
 use App\Exceptions\CustomException;
 use App\Http\Controllers\ApiController;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -55,7 +55,7 @@ class PostController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -66,14 +66,16 @@ class PostController extends ApiController
             'type' => 'required|in:' . implode(',', Post::TYPE),
             'published_at' => 'sometimes|date_format:Y-m-d H:i:s|after:now',
             'medias.*' => 'file|mimes:jpeg,png,jpg,gif,svg,mp4,mpeg,mov|max:10240',
-            'medias' => 'sometimes|array|max:' . config('filesystems.limit_post_media'),
+            'medias' => 'required|array|max:' . config('filesystems.limit_post_media'),
             'plan_id' => 'required|exists:plans,id,user_id,' . Auth::guard('api')->id(),
         ])) {
             return $this->responseFail($this->getValidationErrors());
         }
 
         $this->transactionStart();
-        $post = $this->postService->create($request->only('content', 'medias', 'published_at', 'is_adult', 'type', 'plan_id'));
+        $post = $this->postService->create(
+            $request->only('content', 'medias', 'published_at', 'is_adult', 'type', 'plan_id')
+        );
 
         return $this->responseSuccess($post, trans('post.message.create_success'));
     }
@@ -81,7 +83,7 @@ class PostController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
@@ -92,15 +94,18 @@ class PostController extends ApiController
             return $this->responseSuccess($post);
         }
 
-        return $this->responseFail(trans('post.message.post_not_found'), $post,
-            AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND);
+        return $this->responseFail(
+            trans('post.message.post_not_found'),
+            $post,
+            Response::HTTP_NOT_FOUND
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
@@ -109,12 +114,19 @@ class PostController extends ApiController
             $post = $this->postService->getById($id);
 
             if (empty($post)) {
-                return $this->responseFail(trans('post.message.post_not_found'), $post,
-                    AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND);
+                return $this->responseFail(
+                    trans('post.message.post_not_found'),
+                    null,
+                    Response::HTTP_NOT_FOUND
+                );
             }
 
             if (Gate::forUser(Auth::guard('api')->user())->denies('is-owner', $post)) {
-                return $this->responseFail(trans('post.message.can_not_update'), '', AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHORIZED);
+                return $this->responseFail(
+                    trans('post.message.can_not_update'),
+                    null,
+                    Response::HTTP_FORBIDDEN
+                );
             }
 
             if (!$this->customValidate($request, [
@@ -123,7 +135,7 @@ class PostController extends ApiController
                 'type' => 'sometimes|in:' . implode(',', Post::TYPE),
                 'published_at' => 'sometimes|date_format:Y-m-d H:i:s|after:now',
                 'medias.*' => 'file|mimes:jpeg,png,jpg,gif,svg,mp4,mpeg,mov|max:10240',
-                'medias' => ['sometimes', 'array', new ValidateLimitNumberMediaOfPost($post)],
+                'medias' => ['required', 'array', new ValidateLimitNumberMediaOfPost($post)],
                 'delete_medias' => ['sometimes', 'array', new ValidateDeleteMediaOfPost($post)],
                 'plan_id' => 'sometimes|exists:plans,id,user_id,' . Auth::guard('api')->id(),
             ])) {
@@ -139,7 +151,6 @@ class PostController extends ApiController
             );
 
             $this->transactionStart();
-
             $post = $this->postService->update($post, $postData);
 
             return $this->responseSuccess($post, trans('post.message.update_success'));
@@ -151,7 +162,7 @@ class PostController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
@@ -160,11 +171,18 @@ class PostController extends ApiController
             $post = $this->postService->getById($id);
 
             if (empty($post)) {
-                return $this->responseFail(trans('post.message.post_not_found'), $post,
-                    AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND);
+                return $this->responseFail(
+                    trans('post.message.post_not_found'),
+                    $post,
+                    Response::HTTP_NOT_FOUND
+                );
             }
             if (Gate::forUser(Auth::guard('api')->user())->denies('is-owner', $post)) {
-                return $this->responseFail(trans('post.message.can_not_delete'), '', AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHORIZED);
+                return $this->responseFail(
+                    trans('post.message.can_not_delete'),
+                    '',
+                    Response::HTTP_FORBIDDEN
+                );
             }
 
             $this->transactionStart();

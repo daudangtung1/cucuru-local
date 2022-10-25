@@ -6,6 +6,7 @@ use App\Exceptions\CustomException;
 use App\Http\Controllers\ApiController;
 use App\Services\PlanService;
 use App\Utils\AppConfig;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -60,11 +61,11 @@ class PlanController extends ApiController
 
         if (empty($plan)) {
             return $this->responseFail(trans('plan.message.plan_not_found'), $plan,
-                AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND);
+                Response::HTTP_NOT_FOUND);
         }
 
         if (Gate::forUser(Auth::guard('api')->user())->denies('is-owner', $plan)) {
-            return $this->responseFail(trans('plan.message.can_not_update'), '', AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHORIZED);
+            return $this->responseFail(trans('plan.message.can_not_update'), '', Response::HTTP_FORBIDDEN);
         }
 
         if (!$this->customValidate($request, [

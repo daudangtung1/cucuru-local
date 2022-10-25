@@ -1,6 +1,7 @@
 <?php
 namespace App\Cognito;
 
+use App\Exceptions\CustomException;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Ellaisys\Cognito\AwsCognitoClient;
@@ -88,6 +89,16 @@ class CognitoClient
      * @var string
      */
     const EXPIRED_CODE = 'ExpiredCodeException';
+
+    /**
+     * Constant representing the password not accepted for AWS cognito policy.
+     */
+    const INVALID_PARAMETER_EXCEPTION = 'InvalidParameterException';
+
+    /**
+     * Constant representing the password not accepted for AWS cognito policy.
+     */
+    const INVALID_PASSWORD_EXCEPTION = 'InvalidPasswordException';
 
     /**
      * Constant representing the SMS MFA challenge.
@@ -219,7 +230,16 @@ class CognitoClient
             $response = $this->client->signUp($payload);
         } catch (CognitoIdentityProviderException $e) {
             if ($e->getAwsErrorCode() === self::USERNAME_EXISTS) {
-                return false;
+                throw new CustomException($e->getAwsErrorMessage());
+                // return false;
+            } //End if
+
+            if ($e->getAwsErrorCode() === self::INVALID_PARAMETER_EXCEPTION) {
+                throw new CustomException($e->getAwsErrorMessage());
+            }
+
+            if ($e->getAwsErrorCode() === self::INVALID_PASSWORD_EXCEPTION) {
+                throw new CustomException($e->getAwsErrorMessage());
             } //End if
 
             throw $e;

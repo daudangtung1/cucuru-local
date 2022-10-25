@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
@@ -61,37 +62,36 @@ class Handler extends ExceptionHandler
     {
         $isErrorShown = config('app.env') == 'production' && config('app.debug') == false;
         TransactionHelper::getInstance()->stop(); // prevent loss transaction
-        // logError($exception);
 
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
-                '_status' => AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND,
+                '_status' => Response::HTTP_NOT_FOUND,
                 '_success' => false,
                 '_messages' => '404 - ' . trans('error_http.404'),
                 '_data' => null
-            ], AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         if ($exception instanceof UnauthorizedHttpException) {
             return response()->json([
-                '_status' => AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHENTICATED,
+                '_status' => Response::HTTP_UNAUTHORIZED,
                 '_success' => false,
                 '_messages' => $exception->getMessage(),
-                '_code' => AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHENTICATED,
+                '_code' => Response::HTTP_UNAUTHORIZED,
                 '_data' => $isErrorShown ? [
                     'exception' => [
                         'file' => $exception->getFile(),
                         'line' => $exception->getLine(),
                     ],
                 ] : null
-            ], AppConfig::HTTP_RESPONSE_STATUS_NOT_AUTHENTICATED);
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         // show detail error in json format
         if (config('app.env') == 'production' && config('app.debug') == false) {
             return response()->json(
                 ['_messages' => $exception->getMessage()],
-                AppConfig::HTTP_RESPONSE_STATUS_ERROR
+                Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
 
@@ -106,11 +106,11 @@ class Handler extends ExceptionHandler
             ];
 
             return response()->json([
-                '_status' => AppConfig::HTTP_RESPONSE_STATUS_ERROR,
+                '_status' => Response::HTTP_UNPROCESSABLE_ENTITY,
                 '_success' => false,
                 '_messages' => [$response instanceof JsonResponse ? $this->renderMessage($response) : $exception->getMessage()],
                 '_data' => $data
-            ], AppConfig::HTTP_RESPONSE_STATUS_ERROR);
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return $response;

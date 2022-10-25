@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Services\FaqService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class FaqController extends ApiController
 {
@@ -19,7 +20,7 @@ class FaqController extends ApiController
         $this->faqService = new FaqService();
     }
 
-    public function index(Request $request, FaqService $faqService)
+    public function index(Request $request)
     {
         $pageNo = $this->getValidPageNo($request->input('page'));
         $limit = $this->getValidLimit($request->input('limit'), self::DEFAULT_LIMIT);
@@ -30,9 +31,19 @@ class FaqController extends ApiController
         return $this->responseSuccess($faqs['data']);
     }
 
-    public function show(Request $request, FaqService $faqService)
+    public function show($id)
     {
-        return $faqService->getById($request->id);
+        $faq = $this->faqService->getById($id);
+
+        if ($faq) {
+            return $this->responseSuccess($faq);
+        }
+
+        return $this->responseFail(
+            trans('faq.message.post_not_found'),
+            $faq,
+            Response::HTTP_NOT_FOUND
+        );
     }
 
     /*public function create(Request $request, FaqService $faqService)

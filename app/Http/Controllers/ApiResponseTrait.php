@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\CustomException;
 use App\Utils\AppConfig;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Response;
 
 trait ApiResponseTrait
 {
@@ -38,7 +39,7 @@ trait ApiResponseTrait
      */
     protected function response($failed, $data = null, $message = '', $customStatus = null)
     {
-        $status = !is_null($customStatus) ? $customStatus : ($failed ? AppConfig::HTTP_RESPONSE_STATUS_ERROR : AppConfig::HTTP_RESPONSE_STATUS_OK);
+        $status = !is_null($customStatus) ? $customStatus : ($failed ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK);
         return response()->json([
             '_status' => $status,
             '_success' => !$failed,
@@ -71,7 +72,7 @@ trait ApiResponseTrait
         $this->transactionStop();
 
         if ($message instanceof ModelNotFoundException) {
-            return $this->response(true, null, '404 - ' . trans('error_http.404'), AppConfig::HTTP_RESPONSE_STATUS_NOT_FOUND);
+            return $this->response(true, null, '404 - ' . trans('error_http.404'), Response::HTTP_NOT_FOUND);
         } elseif ($message instanceof CustomException) {
             $exception = $message;
             $message = $exception->getMessage();

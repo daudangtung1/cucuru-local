@@ -44,8 +44,13 @@ class AuthenticatedController extends ApiController
         }
     }
 
-    protected function attemptLogin(Collection $request, string $guard = 'web', string $paramUsername = 'email', string $paramPassword = 'password', bool $isJsonResponse = false)
-    {
+    protected function attemptLogin(
+        Collection $request,
+        string $guard = 'web',
+        string $paramUsername = 'email',
+        string $paramPassword = 'password',
+        bool $isJsonResponse = false
+    ) {
         try {
             //Get key fields
             $keyUsername = 'email';
@@ -83,8 +88,12 @@ class AuthenticatedController extends ApiController
         return $claim;
     }
 
-    private function sendFailedLoginResponse(Collection $request, Exception $exception = null, bool $isJsonResponse = false, string $paramUsername = 'email')
-    {
+    private function sendFailedLoginResponse(
+        Collection $request,
+        Exception $exception = null,
+        bool $isJsonResponse = false,
+        string $paramUsername = 'email'
+    ) {
         $message = 'FailedLoginResponse';
         if (!empty($exception)) {
             $message = $exception->getMessage();

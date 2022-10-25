@@ -7,4 +7,8 @@ return [
 
     'placeholder' => '例 : ポイント',
     'text' => '特によくある質問',
+
+    'message' => [
+        'not_found' => 'よくある質問が見つかりません',
+    ]
 ];
