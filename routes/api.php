@@ -60,6 +60,7 @@ Route::group([
     Route::get('user/followers', 'UserController@getFollower');
     Route::get('affiliates/me/code', 'UserController@getInviteCode');
 
+    Route::get('me', 'UserController@me');
     Route::post('plans', 'PlanController@store');
     Route::put('plans/{id}', 'PlanController@update');
 
