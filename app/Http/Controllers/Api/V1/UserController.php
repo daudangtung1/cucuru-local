@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends ApiController
 {
@@ -119,5 +120,10 @@ class UserController extends ApiController
         }
 
         return $this->responseFail(__('affiliate.message_register_affiliate'));
+    }
+
+    public function me()
+    {
+        return $this->responseSuccess(Auth::guard('api')->user());
     }
 }
