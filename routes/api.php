@@ -34,7 +34,7 @@ Route::get('/v1/faqs/{id}', [FaqController::class, 'show']);
 Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api\V1',
-    'middleware' => ['aws-cognito'],
+    // 'middleware' => ['aws-cognito'],
 ], function () {
     Route::get('posts', 'PostController@index');
     Route::post('posts', 'PostController@store');
@@ -51,6 +51,13 @@ Route::group([
         Route::get('/post/{postId}', 'CommentController@index');
         Route::post('/', 'CommentController@store');
         Route::delete('/{id}', 'CommentController@delete');
+    });
+
+    Route::group([
+        'prefix' => 'cmt'
+    ], function () {
+        Route::get('/post/{postId}', 'CommentController@index_post');
+        Route::post('/post/{postId}/create', 'CommentController@create_cmt');
     });
 
     Route::get('payments', 'PaymentController@index');
@@ -72,7 +79,7 @@ Route::group([
 
     Route::group([
         'namespace' => 'stripe',
-    ], function (){
+    ], function () {
         Route::get('register-user', [StripeController::class, 'registerUser']);
         Route::get('update-payment-method', [StripeController::class, 'updatePaymentMethod']);
         Route::post('add-payment-method', [StripeController::class, 'addPaymentMethod']);
