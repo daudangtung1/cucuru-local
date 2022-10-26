@@ -12,6 +12,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Validator;
 
 class CommentController extends ApiController
 {
@@ -84,5 +85,23 @@ class CommentController extends ApiController
         }
 
         return $this->responseFail(__('comment.message.delete_fail'));
+    }
+
+    public function index_post($postId)
+    {
+        $cmts = $this->commentService->getCmtByPost($postId);
+        return response(['cmts' => $cmts['data']], '200');
+    }
+
+    public function create_cmt(Request $request)
+    {
+        $request->only(['content', 'user_id', 'commentable_type', 'commentable_id']);
+        $data_validate = $this->validate($request, [
+            'content' => 'required',
+            'commentable_id' => 'required',
+            'commentable_type' => 'required|in:' . implode(',',  array_flip(Comment::COMMENT_TYPE)),
+        ]);
+        if ($data_validate) return false;
+        $this->commentService->getCmtByPost($data_validate);
     }
 }

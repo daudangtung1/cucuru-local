@@ -18,7 +18,7 @@ class CommentService extends BaseService
     {
         return $strict ? Comment::find($id) : Comment::findOrFail($id);
     }
-    
+
     public function get($postId, $limit, $pageNo)
     {
         $post = (new PostService())->getById($postId);
@@ -98,5 +98,12 @@ class CommentService extends BaseService
         } catch (\Exception $exception) {
             throw new CustomException(null, CustomException::APP_LEVEL, null, 0, $exception);
         }
+    }
+
+    public function getCmtByPost($postId)
+    {
+        if (empty(Post::find($postId))) return ['error' => trans('post.message.post_not_found')];
+        $cmts['data'] = Post::find($postId)->comments();
+        return $cmts;
     }
 }
